@@ -2,7 +2,7 @@
 title: Starting a new blog
 date: 2025-10-07 20:48:00 +/-0000
 categories: [blog,github]
-tags: [blog,jekyll,github]     # TAG names should always be lowercase
+tags: [blog,jekyll,github]
 ---
 
 ## Introduction
@@ -21,7 +21,7 @@ So a blog helps me two-fold: I love writing, hopefully that's coming across, and
  - Why have I chosen a specific architecture?
  - What has hindsight taught me if I were to implement this tech again?
 
- ## Why Chirpy, Jekyll, and GitHub Pages
+## Why Chirpy, Jekyll, and GitHub Pages
  Firstly, it's extremely low cost (free!). Secondly, I'm not looking to become a front-end dev - I want my time primarily to go into devops tech and backend programming. Thirdly, there's an [excellent video from TechnoTim](https://www.youtube.com/watch?v=F8iOU1ci19Q) that outlined the entire process and I've gone from absolutely nothing to writing and publishing this blog post in one evening! My deployment process wasn't as simple as following that video, and I'll create a follow-up post that outlines my exact steps from a fresh Windows machine to this blog post.
 
 For now, though, welcome to the blog! 
