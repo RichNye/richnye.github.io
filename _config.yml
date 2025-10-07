@@ -14,9 +14,9 @@ timezone:
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Richard Nye's Tech Blog # the main title
+title: Richard Nye # the main title
 
-tagline: Richard Nye's Tech Blog # it will display as the subtitle
+tagline: Transitioning from sysadmin to DevOps # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   A blog about transitioning from sysadmin to DevOps, cloud, coding, and other tech interests.
