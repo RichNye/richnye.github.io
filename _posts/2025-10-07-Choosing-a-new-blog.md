@@ -17,12 +17,12 @@ I've even dabbled in a bit of software development with ASP.NET Core!
 I'm at a stage in my career, like many of us are I imagine, where it's time to learn new skills or get left behind. The days of purely GUI-driven sysadmin work are fading fast. Automation is king, but so is devops and learning from our software dev brothers-in-arms! I've already used Terraform in the past, but I wanted to branch out into the world of Ansible, GitHub Actions, ProxMox, Linux, the list is endless. And given how vast that list is, I really wanted to be able to share and track my progress. 
 
 So a blog helps me two-fold: I love writing, hopefully that's coming across, and I also wanted to reflect on the reasoning behind my choices for my homelab and other projects. The questions I want my blog posts to answer:
- - What have I learned about a technology?
- - Why have I chosen a specific architecture?
- - What has hindsight taught me if I were to implement this tech again?
+- What have I learned about a technology?
+- Why have I chosen a specific architecture?
+- What has hindsight taught me if I were to implement this tech again?
 
 ## Why Chirpy, Jekyll, and GitHub Pages
- Firstly, it's extremely low cost (free!). Secondly, I'm not looking to become a front-end dev - I want my time primarily to go into devops tech and backend programming. Thirdly, there's an [excellent video from TechnoTim](https://www.youtube.com/watch?v=F8iOU1ci19Q) that outlined the entire process and I've gone from absolutely nothing to writing and publishing this blog post in one evening! My deployment process wasn't as simple as following that video, and I'll create a follow-up post that outlines my exact steps from a fresh Windows machine to this blog post.
+Firstly, it's extremely low cost (free!). Secondly, I'm not looking to become a front-end dev - I want my time primarily to go into devops tech and backend programming. Thirdly, there's an [excellent video from TechnoTim](https://www.youtube.com/watch?v=F8iOU1ci19Q) that outlined the entire process and I've gone from absolutely nothing to writing and publishing this blog post in one evening! My deployment process wasn't as simple as following that video, and I'll create a follow-up post that outlines my exact steps from a fresh Windows machine to this blog post.
 
 For now, though, welcome to the blog! 
 
