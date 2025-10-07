@@ -1,8 +1,8 @@
 ---
 title: Starting a new blog
 date: 2025-10-07 20:48:00 +0100
-categories: [blog,github]
-tags: [blog,jekyll,github]
+categories: [blog,github,sysadmin,devops]
+tags: [blog,jekyll,github,sysadmin,devops]
 author: richardnye
 description: Why bother with a blog?!
 ---
@@ -16,7 +16,7 @@ Fast forward to today, my skillset is very much a jack-of-all-trades. I'd say my
 I've even dabbled in a bit of software development with ASP.NET Core! 
 
 ## Why a blog?
-I'm at a stage in my career, like many of us are I imagine, where it's time to learn new skills or get left behind. The days of purely GUI-driven sysadmin work are fading fast. Automation is king, but so is devops and learning from our software dev brothers-in-arms! I've already used Terraform in the past, but I wanted to branch out into the world of Ansible, GitHub Actions, ProxMox, Linux, the list is endless. And given how vast that list is, I really wanted to be able to share and track my progress. 
+I'm at a stage in my career, like many of us are I imagine, where it's time to learn new skills or get left behind. The days of purely GUI-driven sysadmin work are fading fast. Automation is king, but so is devops and learning from our software dev brothers-in-arms! I've already used Terraform in the past, but I wanted to branch out into the world of Ansible, GitHub Actions, Proxmox, Linux, the list is endless. And given how vast that list is, I really wanted to be able to share and track my progress. 
 
 So a blog helps me two-fold: I love writing, hopefully that's coming across, and I also wanted to reflect on the reasoning behind my choices for my homelab and other projects. The questions I want my blog posts to answer:
 - What have I learned about a technology?
