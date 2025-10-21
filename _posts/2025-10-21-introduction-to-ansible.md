@@ -15,7 +15,7 @@ As I've mentioned previously, the ultimate goal here is to run one script that s
 ## Infrastructure Architecture
 Currently, I have a basic CRUD app with the typical old-school architecture; load balancer, web server(s), and database server. At the time of this post, Ansible playbooks have been created for the web server and database server, and I must say that they're working pretty well. And they should be, because the amount of iterations they've been through is frankly insane. Hurdle after hurdle! 
 
-![App architecture diagram](../assets/images/app-architecture.png)
+![App architecture diagram](/assets/images/app-architecture.png)
 
 The green highlighted areas are what we'll cover today.
 
