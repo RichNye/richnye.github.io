@@ -45,7 +45,14 @@ This was an absolute battle. I'm not overly familiar with Postgres - I've dabble
 - Create the database user for the app. Password in plain text here. Awful.
 - Create the app database with the owner as the user.
 
-Simple, but I've done many improvements in a different branch since. I need to finalise those changes and get them merged. I'll cover that in a future post once it's done. 
+Simple, but I've done many improvements in a different branch since. I need to finalise those changes and get them merged. I'll cover that in a future post once it's done.
+
+## Future Improvements
+I've already started on levelling up both playbooks with handlers, the use of variables, and I'm playing around with Ansible Vault. I also need to get the load balancer done, something which is hopefully fairly straightforward as I've dealt with haproxy before. 
+
+Another area I'd like to investigate is how to properly link Terraform and Ansible together, or if it's even possible.
+
+I've also made it so that the GitHub Action workflow on the main application actually calls the web server playbook, which is something I'm really happy with. It really has joined up the entire deployment process and is my favourite part of the homelab so far. It's like magic!
 
 ## Hindsight Reflection
 My number one failure here is not starting this blog earlier. It's been two months since I even looked at this Ansible setup and it shows. I remember needing psycopg2 and acl for a specific reason but can't remember why. I wasn't documenting anything at the time and that was my undoing. Treat your homelabs like they're production systems - document everything! 
