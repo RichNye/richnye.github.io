@@ -50,7 +50,7 @@ This was an absolute battle. I'm not overly familiar with Postgres - I've dabble
 Simple, but I've done many improvements in a different branch since. I need to finalise those changes and get them merged. I'll cover that in a future post once it's done.
 
 ## Future Improvements
-I've already started on levelling up both playbooks with handlers, the use of variables, and I'm playing around with Ansible Vault. I also need to get the load balancer done, something which is hopefully fairly straightforward as I've dealt with haproxy before. 
+I've already started on leveling up both playbooks with handlers, the use of variables, and I'm playing around with Ansible Vault. I also need to get the load balancer done, something which is hopefully fairly straightforward as I've dealt with haproxy before. 
 
 Another area I'd like to investigate is how to properly link Terraform and Ansible together, or if it's even possible.
 
