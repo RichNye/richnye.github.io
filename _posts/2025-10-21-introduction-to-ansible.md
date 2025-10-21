@@ -1,6 +1,6 @@
 ---
 title: Introduction to my Ansible Setup
-date: 2025-10-21 11:31:00 +0100
+date: 2025-10-21 10:31:00 +0100
 categories: [ansible]
 tags: [ansible,sysadmin,devops]
 author: richardnye
