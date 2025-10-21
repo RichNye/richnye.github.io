@@ -50,14 +50,14 @@ This was an absolute battle. I'm not overly familiar with Postgres - I've dabble
 Simple, but I've done many improvements in a different branch since. I need to finalise those changes and get them merged. I'll cover that in a future post once it's done.
 
 ## Future Improvements
-I've already started on levelling up both playbooks with handlers, the use of variables, and I'm playing around with Ansible Vault. I also need to get the load balancer done, something which is hopefully fairly straightforward as I've dealt with haproxy before. 
+I've already started on leveling up both playbooks with handlers, the use of variables, and I'm playing around with Ansible Vault. I also need to get the load balancer done, something which is hopefully fairly straightforward as I've dealt with haproxy before. 
 
 Another area I'd like to investigate is how to properly link Terraform and Ansible together, or if it's even possible.
 
 I've also made it so that the GitHub Action workflow on the main application actually calls the web server playbook, which is something I'm really happy with. It really has joined up the entire deployment process and is my favourite part of the homelab so far. It's like magic!
 
 ## Hindsight Reflection
-My number one failure here is not starting this blog earlier. It's been two months since I even looked at this Ansible setup and it shows. I remember needing psycopg2 and acl for a specific reason but can't remember why. I wasn't documenting anything at the time and that was my undoing. Treat your homelabs like they're production systems - document everything! 
+My number one failure here is not starting this blog earlier. It's been two months since I even looked at this Ansible setup and it shows. I remember needing psycopg2 and acl for a specific reason but can't remember why (EDIT: psycopg2 is needed because Ansible uses Python to interact with Postgres, acl to become the postgres user). I wasn't documenting anything at the time and that was my undoing. Treat your homelabs like they're production systems - document everything! 
 
 I've also started a new branch with many improvements, but again I can't remember where I was at. I'd like to implement this like a proper project - utilising GitHub project tools along the way will help with that. I also desperately need to improve my branch and commit hygiene. I've created a branch to facilitate multiple environments, which is far too overarching and I've lost all semblance of order. I think I'll do a future post on the dev part of devops, because it's something I've definitely struggled with the most. The concepts themselves aren't hard, but building the habit definitely is. It feels like an art form!
 
