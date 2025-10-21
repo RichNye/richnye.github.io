@@ -37,6 +37,8 @@ The steps are, roughly, as follows:
 Overall, at this stage it was working well but there are improvements coming. Primarily around securely creating environment variables (connection string, primarily) and implementing handlers so that actions aren't firing when no changes have occurred.
 
 ## Database server
+[You can find the db server playbook here.](https://github.com/RichNye/homelab/blob/master/ansible/playbooks/setup_db.yaml)
+
 This was an absolute battle. I'm not overly familiar with Postgres - I've dabbled a bit, but we're talking basic CRUD stuff, not DBA work. The Ansible docs were helpful here but there seemed to be many ways to do the same thing, which didn't help. I settled on the following:
 - Install Postgresql, nice and simple.
 - Install acl - should've been combined into one apt task, really.
