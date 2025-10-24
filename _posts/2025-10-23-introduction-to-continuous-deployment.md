@@ -39,7 +39,7 @@ I'm absolutely not an expert when it comes to GitHub Actions, so this won't be m
 4. If happy, run a dotnet publish - I was actually responsible for this because I wanted any published build to specify the Linux-x64 runtime (because that's what my web servers run), I wanted it to be self-contained just for portability, and I wanted it to output to a specific directory (the 'publish' folder).
 5. It then runs a separate deploy job, where I leverage dawidd6's ansible-playbook action to run my setup_web playbook and specify an inventory. 
 
-Okay, maybe I had more to do it with than I thought, but I still leveraged all these amazing .NET and Ansible actions created by others to get me there easily. Essentially the flow is this: 
+Okay, maybe I had more to do it with than I thought, but I still leveraged all these amazing .NET and Ansible actions created by others to get me there easily. Essentially the flow is this:
 
 Commit on master → GitHub Actions workflow → self-hosted runner → build, test, and publish the API → deploy the new build with Ansible.
 
@@ -52,7 +52,7 @@ The negatives? I've only got it running on the master branch. I've got no idea h
 I'm fairly happy with where it is now, actually. I guess my future plans are more overarching than Ansible generally. I'm currently looking at Docker and Kubernetes, and I've managed to get the API running in a container using my own Dockerfile. I don't see a reason why Ansible will be needed here, perhaps I need to look at GitHub Actions and how they combine with creating Docker images? Maybe Ansible will come into it after all? I'm not entirely sure yet, but you can expect future posts about this when I am.
 
 ## Learning Progress
-As mentioned, I've been learning containerisation of apps using Docker and starting to dip my toe in the world of Kubernetes this week. I want to do a massive shout out to [Jeff Geerling](https://www.jeffgeerling.com/) for his YouTube tutorials on both Ansible and Kubernetes. While they can be a bit longwinded sometimes (that's just the nature of livestream VODs), sometimes it's nice to have a slower and calmer tutorial series rather than a cram!
+As mentioned, I've been learning containerisation of apps using Docker and starting to dip my toe in the world of Kubernetes this week. I want to do a massive shout out to [Jeff Geerling](https://www.jeffgeerling.com/) for his YouTube tutorials on both Ansible and Kubernetes. While they can be a bit longwinded sometimes (that's just the nature of livestream VODs), it's nice to have a slower and calmer tutorial series rather than a cram!
 
 Thanks for reading, please do feel free to email me with thoughts, feedback, whatever else. 
 
