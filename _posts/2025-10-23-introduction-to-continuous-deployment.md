@@ -7,7 +7,7 @@ author: richardnye
 description: Introducing my current continuous deployment setup that combines an ASP.NET Core project, with GitHub Actions and Ansible in a self-hosted runner.
 ---
 
-Hi all. Today I wanted to explain my first foray into automatic code deployment and how I got to this point. Today we'll cover the first ever hosting setup of my MealPlanner API in Azure, how that introduced me to GitHub Actions, and how I pivoted to an on-prem setup that utilises Ansible. It helps if you've read previous blog posts, [particularly this introduction to my Ansible setup](posts/introduction-to-ansible), but is by no means mandatory!
+Hi all. Today I wanted to explain my first foray into automatic code deployment and how I got to this point. Today we'll cover the first ever hosting setup of my MealPlanner API in Azure, how that introduced me to GitHub Actions, and how I pivoted to an on-prem setup that utilises Ansible. It helps if you've read previous blog posts, [particularly this introduction to my Ansible setup](/posts/introduction-to-ansible), but is by no means mandatory!
 
 ## MealPlanner API
 In short, I wanted to develop my own application for many reasons, and I should probably create a dedicated blog post about it. Here's the very brief list:
@@ -24,7 +24,7 @@ When I joined my current role, I needed to get up to speed with Azure quickly. I
 As part of the scaffolding and Microsoft ecosystem, ASP.NET Core basically begs you to run it as an app service in Azure. Whack it in a GitHub repo, link the two together to create an automated GitHub Actions flow, and away you go with every commit to main. It was easy, a total breeze, and allowed me to look under the hood of an actual GitHub Action workflow for the first time. What did deployments look like? What happens when they fail? You can test a build before deployment?! All new concepts.
 
 ## Transitioning to On-Premise
-Like everything in life, time got away from me. The Azure free credits expired, I was busy with other things at work and in life, and I wasn't prepared to pay to keep this random little API online. I've discussed why I moved to a homelab [in this post](posts/introduction-to-homelab) so I won't regurgitate it here.
+Like everything in life, time got away from me. The Azure free credits expired, I was busy with other things at work and in life, and I wasn't prepared to pay to keep this random little API online. I've discussed why I moved to a homelab [in this post](/posts/introduction-to-homelab) so I won't regurgitate it here.
 
 But I had my repo and I'd gotten very used to automated deployment. At this point I'd also created the first iteration of IaC and Ansible was working well. So how could I take my current Ansible and VM setup and set up continuous deployment using GitHub Actions? How can I run GitHub Actions workflows without opening up my private network to the world? Enter the Ansible playbook extensions on the GitHub Actions marketplace, and self-hosted runners. Honestly, it's genuinely never been easier to get a good, modern homelab going. 
 
