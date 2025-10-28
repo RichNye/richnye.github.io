@@ -45,7 +45,7 @@ Another ```terraform plan``` showed that at least the VMs didn't need to be dest
 ## Ensuring disks aren't wiped
 So, now for the final issue - what's wanting to delete my disks? A look at the state file showed one main cause - there was a 'disks' json array but 'disk' itself was empty. Now I knew that I simply couldn't clean that up manually. Editing a couple of values manually is one thing; manually creating json objects and tidying up an array is quite another when it comes to tfstate. So I went with the tactic of manually detaching my current VM disk, thinking it should keep it safe from harm, and having Terraform create another. I could delete this new disk without issues, it has nothing but an Ubuntu template install on it, and then reattach the existing disk in virtio0, because that's what my Terraform resource says I should do. 
 
-It's worth noting I ran ```terraform plan -target=module.db_vm"```, for example, just to tackle each Terraform resource one by one. When you've been staring at plans for over an hour, you'll thank me for that. 
+It's worth noting I ran ```terraform plan -target="fixmodule.db_vm"```, for example, just to tackle each Terraform resource one by one. When you've been staring at plans for over an hour, you'll thank me for that. 
 
 And all of that work is precisely what I've done. And it seems to have worked apart from two things:
 1) I had to manually set the boot order again, but that's hardly a massive job with only one boot disk anyway.
@@ -77,6 +77,6 @@ Boy where do I even begin. First - back up your damn state files! Ideally, use s
 
 I've also moved my local repo clone to any other drive, in my case E, but that's an old spinning hard drive that could die at any moment so I really should get that script created... 
 
-Terraform import is far from perfect. I've skimmed that it may depend on your Terraform provider being used? Either way, it's taught me that Terraform is extremely punishing when it comes to either importing existing infra or recovering from state file loss. I'd love to see this be cleaner, because right now it seems extremely pedantic and your Terraform state will likely never be the same or as perfect as if Terraform had created the resources from scratch.
+Terraform import is far from perfect. I've skimmed that it may depend on your Terraform provider being used? Either way, it's taught me that Terraform is extremely punishing when it comes to either importing existing infra or recovering from state file loss. I'd love to see this made cleaner, because right now it seems extremely pedantic and your Terraform state will likely never be the same or as perfect as if Terraform had created the resources from scratch.
 
 I'd love to know your stories of recovering from state file loss. Please do email me, link is to the left. What did I do well, what could I have improved?
