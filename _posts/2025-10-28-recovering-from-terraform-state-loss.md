@@ -43,7 +43,7 @@ While the disks weren't great either, I needed to tackle Terraform's desire to c
 Another ```terraform plan``` showed that at least the VMs didn't need to be destroyed and recreated, but I did still have issues with disks. 
 
 ## Ensuring disks aren't wiped
-So, now for the final issue - what's wanting to delete my disks? A look at the state file showed one main cause - there was a 'disks' json array but 'disk' itself was empty. Now I knew that I simply couldn't clean that up manually. Editing a couple of values manually is one thing; manually creating json objects and tidying up an array is quite another when it comes to tfstate. So I went with the tactic of manually detaching my current VM disk, thinking it should keep it safe from harm, and having Terraform create another. I could delete this new disk without issues, it has nothing but an Ubuntu template install on it, and then reattach the existing disk in virtio0, because that's what my Terraform resource says I should do. 
+So, now for the final issue - what's wanting to delete my disks? A look at the state file showed one main cause - there was a 'disks' json array but 'disk' itself was empty. Now I knew that I simply couldn't clean that up manually. Editing a couple of values by hand is one thing; manually creating json objects and tidying up an array is quite another when it comes to tfstate. So I went with the tactic of manually detaching my current VM disk, thinking it should keep it safe from harm, and having Terraform create another. I could delete this new disk without issues, it has nothing but an Ubuntu template install on it, and then reattach the existing disk in virtio0, because that's what my Terraform resource says I should do. 
 
 It's worth noting I ran ```terraform plan -target="fixmodule.db_vm"```, for example, just to tackle each Terraform resource one by one. When you've been staring at plans for over an hour, you'll thank me for that. 
 
@@ -70,7 +70,7 @@ What I mean by that is every time I go to run another plan, I get this:
             # (24 unchanged attributes hidden)
         }
 ```
-Where it's seemingly convinced the disks are the wrong way around. I've tried all sorts here - manually swapping the json object order in the disk array in my tfstate file, swapping the id values in the state file manually, running a ```terraform apply``` just for this resource to see if it'll fix itself. Nothing works. But also nothing of note changes in Proxmox, so I'm chalking this up as one to live with for now.
+Where it's seemingly convinced the disks are the wrong way around. I've tried all sorts here - manually swapping the json object order in the disk array in my tfstate file, swapping the id values in the state file manually, running a ```terraform apply``` just for this resource to see if it'll fix itself. Nothing works. It causes cloud-init to run again when I apply it the first time, but then nothing of note changes in Proxmox after, so I'm chalking this up as one to live with for now.
 
 ## Learnings
 Boy where do I even begin. First - back up your damn state files! Ideally, use some sort of remote state option. This whole thing would've been avoided had I done that from the start. I'll be doing a lot of research here I think, but at the very least I'll be creating some sort of script that runs on a schedule to copy my state file to OneDrive so that it at least gets backed up. 
