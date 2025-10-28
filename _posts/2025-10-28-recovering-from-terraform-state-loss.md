@@ -31,14 +31,14 @@ module.<resource name> from your tf file + <resource type>.<resource name> from 
 
 Once you've got all of that, you can create and run those commands. My one piece of advice here is to absolutely double, triple, quadruple check your VM ID before running this. It's quite crucial that each VM is appropriately mapped to the corresponding terraform resource. 
 
-Follow this up with a ```terraform plan``` command to 1) refresh the state and 2) get the lay of the land and see what Terraform thinks of your new state file. In my case, it didn't think much of it and wanted to completely remove my existing disks then recreate them. Which is absolutely not okay!
+Follow this up with a ```terraform plan``` command to 1) refresh the state and 2) get the lay of the land and see what Terraform thinks of your new state file. In my case, it didn't think much of it and wanted to completely remove my existing disks then recreate them. Which is absolutely not okay.
 ## Terraform import failings
 So, onto the state file itself then. In my case, there were a couple of key lines that were forcing this destroy action:
 ```
 + clone = "ubuntu-2404-cloudinit-template" # forces replacement
 ~ full_clone = false -> true # forces replacement
 ```
-While the disks weren't great either, I needed to tackle this need to completely destroy existing VMs and recreate first. I couldn't see any way around this other than editing the state file directly and by hand. I know this is a huge no, but it was a grand total of 8 lines (2 per VM) and wouldn't involve me guessing formatting since I was just changing values. And that's exactly what I did. And it worked well - maybe well isn't the word here since it doesn't feel like something to brand about. It worked fine. 
+While the disks weren't great either, I needed to tackle Terraform's desire to completely destroy existing VMs and recreate first. I couldn't see any way around this other than editing the state file directly and by hand. I know this is a huge no, but it was a grand total of 8 lines (2 per VM) and wouldn't involve me guessing formatting since I was just changing values. And that's exactly what I did. And it worked well - maybe well isn't the word here since it doesn't feel like something to brag about. It worked fine. 
 
 Another ```terraform plan``` showed that at least the VMs didn't need to be destroyed and recreated, but I did still have issues with disks. 
 
