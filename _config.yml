@@ -224,3 +224,6 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
+
+version: "1.0.1"
+
