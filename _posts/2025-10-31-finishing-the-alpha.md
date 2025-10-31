@@ -4,7 +4,7 @@ date: 2025-10-31 21:28:00 +0000
 categories: [homelab]
 tags: [homelab,devops,website,dotnet,nginx]
 author: richardnye
-description: Hitting the first milestone in the project with haproxy, nginx, a web frontend to the ASP.NET Core API all being added.
+description: Hitting the first milestone in the project with haproxy, nginx, and a web frontend to the ASP.NET Core API all being added.
 ---
 
 ## Finishing the website alpha
