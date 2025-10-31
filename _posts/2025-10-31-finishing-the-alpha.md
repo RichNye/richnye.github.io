@@ -19,9 +19,9 @@ And I did that for one simple reason - this project, as it currently stands, is 
 ## Adding a load balancer
 I had the web server running the API (kestrel and a self-contained build published for Linux), I had the database server running Postgres, and I'd exported the initial migration SQL and created the MealPlanner database. Great! What I lacked was any form of ability to scale out. This is critical for a couple of reasons:
 
-1) What business in the world only runs one web server? 
-2) As I containerise the app, the web server is the easy place to start. I want to run containers alongside the web VM and eventually decom the VM.
-3) I want the benefits of running a load balancer, particularly haproxy which is layer 7 aware. That means decrypting SSL there instead of every web server, being able to redirect to different servers (will become apparent later) based on the request, and health checks! 
+- What business in the world only runs one web server? 
+- As I containerise the app, the web server is the easy place to start. I want to run containers alongside the web VM and eventually decom the VM.
+- I want the benefits of running a load balancer, particularly haproxy which is layer 7 aware. That means decrypting SSL there instead of every web server, being able to redirect to different servers (will become apparent later) based on the request, and health checks! 
 
 I've gone with haproxy rather than nginx because I see nginx as a web server first and a load balancer second. If haproxy didn't exist, I'd probably use it; but it does, so I won't. So I made sure a load balancer-specific VM was created (thanks Terraform), and got to work creating the ansible playbook 'setup_lb.yaml'. [You can see that here.](https://github.com/RichNye/homelab/blob/master/ansible/playbooks/setup_lb.yaml) It was my first introduction to Jinja templating, and I'm now converted! The only thing I want to improve is adding an haproxy config check prior to copying it, but that can come later on.
 
