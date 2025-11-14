@@ -17,7 +17,7 @@ As of right now, I have IaC in the form of Terraform and Ansible that has create
 - [Introduction to Ansible](/posts/introduction-to-ansible/) and [Leveling up Ansible](/posts/leveling-up-ansible/)
 - [Introduction to Continuous Deployment](/posts/introduction-to-continuous-deployment/)
 
-It all works great, is up and running via https://meals.rnye.tech, fantastic. Now onto the purpose of today - containerising an ASP.NET Core app.
+I also have a GitHub Actions workflow that calls one of the Ansible playbooks to deploy the latest API build to the web server. It all works great, is up and running via https://meals.rnye.tech, fantastic. Now onto the purpose of today - containerising an ASP.NET Core app.
 
 ## Overall Continuous Integration Plan
 I'm very on-prem at the moment; GitHub Actions is running my main workflow using a self-hosted runner here at home, Ansible copies that local self-contained app over to on-prem VMs. It's all on-prem. But I realised that there's absolutely no need for it to remain so tightly-coupled when it comes to CI. I can easily use out-of-the-box actions and combine them with a free Docker Hub repository. This means the flow goes something like this:
