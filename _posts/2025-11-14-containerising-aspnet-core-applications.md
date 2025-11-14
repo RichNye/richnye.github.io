@@ -15,6 +15,7 @@ I also want to experience and map that typical journey from sysadmin to DevOps, 
 As of right now, I have IaC in the form of Terraform and Ansible that has created and configured a web server, a database server, and a load balancer all on-prem. You can find out more about that in the following posts:
 - [Introduction to Terraform](/posts/introduction-to-terraform/)
 - [Introduction to Ansible](/posts/introduction-to-ansible/) and [Leveling up Ansible](/posts/leveling-up-ansible/)
+- [Introduction to Continuous Deployment](/posts/introduction-to-continuous-deployment/)
 
 It all works great, is up and running via https://meals.rnye.tech, fantastic. Now onto the purpose of today - containerising an ASP.NET Core app.
 
