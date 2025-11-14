@@ -22,10 +22,10 @@ I also have a GitHub Actions workflow that calls one of the Ansible playbooks to
 ## Overall Continuous Integration Plan
 I'm very on-prem at the moment; GitHub Actions is running my main workflow using a self-hosted runner here at home, Ansible copies that local self-contained app over to on-prem VMs. It's all on-prem. But I realised that there's absolutely no need for it to remain so tightly-coupled when it comes to CI. I can easily use out-of-the-box actions and combine them with a free Docker Hub repository. This means the flow goes something like this:
 
-1) Something triggers the workflow (I'm doing it manually using workflow_dispatch for now)
-2) GitHub (not on a self-hosted runner) checks out the repo's master branch and then begins a Docker build using a Dockerfile in the same repo
-3) The Dockerfile follows the Microsoft docs [available here](https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows&pivots=dotnet-9-0), with two layers. The only thing modified is the directory paths that get copied into the image.
-4) The image is then uploaded to Docker Hub ready for containers to pull it from wherever.
+1) Something triggers the workflow (I'm doing it manually using workflow_dispatch for now)<br>
+2) GitHub (not on a self-hosted runner) checks out the repo's master branch and then begins a Docker build using a Dockerfile in the same repo<br>
+3) The Dockerfile follows the Microsoft docs [available here](https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows&pivots=dotnet-9-0), with two layers. The only thing modified is the directory paths that get copied into the image.<br>
+4) The image is then uploaded to Docker Hub ready for containers to pull it from wherever.<br>
 
 And that's exactly what's been created. You can see the workflow here [container-deploy.yml](https://github.com/RichNye/MealPlannerApi/blob/master/.github/workflows/container-deploy.yml).
 
