@@ -1,5 +1,5 @@
 ---
-title: Containering an ASP.NET Core application
+title: Containerising an ASP.NET Core application
 date: 2025-11-14 13:57:00 +0000
 categories: [docker]
 tags: [docker,aspnetcore,containers,devops,github]
