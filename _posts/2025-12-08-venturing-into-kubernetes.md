@@ -52,12 +52,12 @@ curl -sfL https://get.k3s.io | sh -
 ```
 This grabs an official script and configures a Kubernetes cluster on the machine. 
 
-To add worker nodes, you run the same script but with k3s_URL=https://myserver:6443 and k3s_TOKEN included. The token value can be found on the control node at /var/lib/rancher/k3s/server/node-token. 
+To add worker nodes, you run the same script but with K3S_URL=https://myserver:6443 and K3S_TOKEN included. The token value can be found on the control node at /var/lib/rancher/k3s/server/node-token. 
 
 And like that, there's a control node and two workers configured.
 
 ## Preventing containers running on the control node
-One thought I had when setting up is that I noticed there was no flag I'd provided in the control node command that specified anything about it being the control node. With the workers, by providing the k3s_URL, at least the script knew you were adding nodes to an already-existing cluster. And it turns out my suspicions were correct - the control node was also a worker. I'm sure there was a way of doing it when running the setup script on the control node, but at this point I was all about speed and getting *something* working. 
+One thought I had when setting up is that I noticed there was no flag I'd provided in the control node command that specified anything about it being the control node. With the workers, by providing the K3S_URL, at least the script knew you were adding nodes to an already-existing cluster. And it turns out my suspicions were correct - the control node was also a worker. I'm sure there was a way of doing it when running the setup script on the control node, but at this point I was all about speed and getting *something* working. 
 
 I wanted my control node to only be a control node - no workloads running on it at all. And it turns out you can do that by adding a special label called a taint to it:
 ```
