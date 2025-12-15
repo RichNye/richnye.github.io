@@ -8,9 +8,9 @@ description: Beginner's introduction to Kubernetes using k3s
 ---
 
 ## Introduction 
-[My last post](/posts/containerising-aspnet-core-applications) was all about venturing into Docker containers using GitHub Actions as a CI tool. I've worked with containers before so I didn't want to spend too long at this particularly stop on the DevOps road. 
+[My last post](/posts/containerising-aspnet-core-applications) was all about venturing into Docker containers using GitHub Actions as a CI tool. I've worked with containers before so I didn't want to spend too long at this particularly stop on the devops road. 
 
-The point of this journey is to increase my knowledge of DevOps practices and tech - and my core gaps are currently AWS and Kubernetes. While I could easily spin up an EKS instance, I figured it would be best to learn the core tech behind Kubernetes first. 
+The point of this journey is to increase my knowledge of devops practices and tech - and my core gaps are currently AWS and Kubernetes. While I could easily spin up an EKS instance with very little knowledge, I figured it would be best to learn the core tech behind Kubernetes first. 
 
 I hope this blog post can serve as a handy beginner's guide for those that are in a similar situation. I'll explain my thought process, how I chose the tool to create my first cluster (because it turns out there's many!) and the commands I ran to get something stood up.
 
@@ -19,10 +19,14 @@ Firstly, I had to familiarise myself with the core concepts. That began with a s
 
 Kubernetes manages containers automatically.
 
-It's really that simple. I've seen tons of explanations that go into great detail about resiliency, scaling, all that good stuff, but that can be a bit overwhelming for a beginner. So really it's about providing a tool that manages an entire estate of containers. You define the machines that containers should run on (Kubernetes workers/nodes) and what containers, and how many of each, should run, and Kubernetes makes it happen. If you can grasp that concept, you're good to carry on.
+It's really that simple. I've seen tons of explanations that go into great detail about resiliency, scaling, and all that good stuff, but that can be a bit overwhelming for a beginner. So really it's about providing a tool that manages an entire estate of containers. You define the following:
+- Machines that containers should run on (Kubernetes workers/nodes)<br>
+- The containers that should run - this means the container image and how many containers running that image you want.<br>
+
+Kubernetes then takes that info and makes it happen. If you can grasp that concept, you're good to carry on.
 
 While learning, I've realised that you can split Kubernetes learning into two main sections:
-- The actual machine architecture that hosts Kubernetes clusters and runs containers
+- The actual machine architecture that hosts Kubernetes clusters and runs containers.
 - The cluster technology itself and all of the different Kubernetes terminology that goes with it.
 
 We'll begin with the former today - the actual setup involved to get a basic cluster running.
@@ -37,7 +41,7 @@ It turns out there's a million and one ways to create a Kubernetes cluster. Even
 - kind
 - doing it completely manually - 'Learn Kubernetes the Hard Way' by Kelsey Hightower.
 
-I've been learning tech for a long time now (it feels like you're always behind in this industry) but I've never seen a first step as ridiculous as this. The nuance between these tools is, frankly, asking a lot for a beginner to know, and I don't see much benefit from learning it this early on. Personally, I went for k3s. It seemed to fit my needs for configuring multiple nodes and appeared to be highly recommended by the community. Honestly, at this stage I could've easily written an essay about which to choose. Sometimes it's better to just make a choice rather than get paralysis from all the options. k3s it is.
+I've been learning tech for a long time now (it feels like you're always behind in this industry) but I've never seen a first step as ridiculous as this. The nuance between these tools is, frankly, asking a lot for a beginner to know, and I don't see much benefit from learning it this early on. Personally, I went for k3s. It seemed to fit my needs for configuring multiple nodes and appeared to be highly recommended by the community. Honestly, at this stage I could've easily written an essay about which to choose. Sometimes it's better to simply make a choice rather than get paralysis from all the options. K3s it is. It might not be the optimal choice but I also had no idea what the optimal choice is at this stage. 
 
 I also saw 'Learn Kubernetes the Hard Way' highly recommended, and this is almost the route I went down. I think it's still on my radar, but I want to move fast and learn a little bit of a lot of things, rather than specialise in Kubernetes this early on. My recommendation is to use some sort of tool (I'm not exactly qualified to say k3s is the best but it's worked well for me) and then revisit Kelsey's course in a few months.
 
@@ -50,9 +54,9 @@ I then ran the following command, basically following the k3s getting started gu
 ```
 curl -sfL https://get.k3s.io | sh -
 ```
-This grabs an official script and configures a Kubernetes cluster on the machine. 
+This grabs the official script and configures a Kubernetes cluster on the machine. 
 
-To add worker nodes, you run the same script but with K3S_URL=https://myserver:6443 and K3S_TOKEN included. The token value can be found on the control node at /var/lib/rancher/k3s/server/node-token. 
+To add worker nodes, you run the same script but with K3S_URL=https://controlplaneserver:6443 and K3S_TOKEN included. The token value can be found on the control node at /var/lib/rancher/k3s/server/node-token. 
 
 And like that, there's a control node and two workers configured.
 
@@ -73,7 +77,7 @@ kubectl describe node k3s-control-01 | grep -A5 Taints
 ```
 
 ## Final thoughts
-It was surprisingly easy to get a cluster running, but I feel like the Kubernetes community really doesn't make it easy by providing so many cluster creation tools. k3s, though, was perfect, and I feel like I barely scratched the surface with all the config options. To be honest, I did barely scratch the surface, and it's a testament to how good k3s is that it allowed me to get a simple cluster going without needing to sit down and learn anything more than a couple of commands. 
+It was surprisingly easy to get a cluster running, but I feel like the Kubernetes community really doesn't make it easy by providing so many cluster creation tools. K3s, though, was perfect, and I feel like I barely scratched the surface with all the config options. To be honest, I did barely scratch the surface, and it's a testament to how good k3s is that it allowed me to get a simple cluster going without needing to sit down and learn anything more than a couple of commands. 
 
 Now I just need to sit down and learn about deployments, ReplicaSets, and all that goodness, which is where the real learning begins and what makes Kubernetes feel like a massive beast.
 

@@ -30,8 +30,8 @@ The steps are, roughly, as follows:
 - Copy the built and published self-contained app. I went self-contained because it makes this Ansible playbook far, far simpler. There's no faffing around trying to install and configure the dotnet runtime, but there's pros and cons to it. I won't cover that here.
 - Make the main binary executable.
 - Create the unit file for the service. This was an interesting exercise and was interesting to see behind the scenes. I went quite boilerplate for this as I didn't have the time to deep-dive. 
-- Reload systemd - yet at this stage I was reloading systemd every. Single. Time. I'm working on implementing handlers!
-- Restart the MealPlannerApi service, again every single time. Embarrassing to look back on this.
+- Reload systemd - yet at this stage I was reloading systemd every. Single. Time. I'm working on implementing handlers! (Update from the future: handlers were extremely simple to implement.)
+- Restart the MealPlannerApi service, again every single time. Embarrassing to look back on this. (Update: now only restarts the service if needed.)
 - Check that the service is enabled and started. At least this one doesn't run every time...
 
 Overall, at this stage it was working well but there are improvements coming. Primarily around securely creating environment variables (connection string, primarily) and implementing handlers so that actions aren't firing when no changes have occurred.
@@ -57,7 +57,7 @@ Another area I'd like to investigate is how to properly link Terraform and Ansib
 I've also made it so that the GitHub Action workflow on the main application actually calls the web server playbook, which is something I'm really happy with. It really has joined up the entire deployment process and is my favourite part of the homelab so far. It's like magic!
 
 ## Hindsight Reflection
-My number one failure here is not starting this blog earlier. It's been two months since I even looked at this Ansible setup and it shows. I remember needing psycopg2 and acl for a specific reason but can't remember why (EDIT: psycopg2 is needed because Ansible uses Python to interact with Postgres, acl to become the postgres user). I wasn't documenting anything at the time and that was my undoing. Treat your homelabs like they're production systems - document everything! 
+My number one failure here is not starting this blog earlier. It's been two months since I even looked at this Ansible setup and it shows. I remember needing psycopg2 and acl for a specific reason but can't remember why (EDIT: psycopg2 is needed because Ansible uses Python to interact with Postgres, acl to become the postgres user). I wasn't documenting anything at the time and that was my undoing. Treat your` homelabs like they're production systems - document everything! 
 
 I've also started a new branch with many improvements, but again I can't remember where I was at. I'd like to implement this like a proper project - utilising GitHub project tools along the way will help with that. I also desperately need to improve my branch and commit hygiene. I've created a branch to facilitate multiple environments, which is far too overarching and I've lost all semblance of order. I think I'll do a future post on the dev part of devops, because it's something I've definitely struggled with the most. The concepts themselves aren't hard, but building the habit definitely is. It feels like an art form!
 

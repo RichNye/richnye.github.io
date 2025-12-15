@@ -15,7 +15,7 @@ The standard out-of-the-box WSL Ubuntu environment wasn't enough to get Chirpy r
 Gem::Ext::BuildError: ERROR: Failed to build gem native extension. current directory: /var/lib/gems/3.2.0/gems/json-2.15.1/ext/json/ext/generator /usr/bin/ruby3.2 -I/usr/lib/ruby/vendor_ruby extconf.rb checking for whether -std=c99 is accepted as CFLAGS... *** extconf.rb failed *** Could not create Makefile due to some reason, probably lack of necessary libraries and/or headers. Check the mkmf.log file for more details. You may need configuration options.
 ```
 
-This was after installing ruby and ruby-dev. It turns out I was missing a few dependencies, and running this fixed it:
+This was after installing ruby and ruby-dev. It turns out I was also missing a few dependencies, and running this fixed it:
 
 ```
 apt install build-essential libssl-dev zlib1g-dev libreadline-dev libyaml-dev
@@ -30,7 +30,7 @@ Once I'd got the site up and running locally, I quickly found myself wanting to 
 - Adding my custom image
 
 ### Customising the footer
-So because you typically don't clone the main Chirpy repo you don't get all site files included - it's typically advised to use the Chirpy starter which includes GitHub Action workflows and other useful bits. This meant I needed to create the _includes directory and download the footer.html file from the main repo. Once I had it, it was simple to remove the elements I didn't want. A simple step with hindsight, but it did take a bit of research when you're completely new to the world of Jekyll and Chirpy!
+So because you typically don't clone the main Chirpy repo you don't get all site files included - it's typically advised to use the Chirpy starter which includes GitHub Action workflows and other useful bits. This meant I needed to create the _includes directory and download the footer.html file from the main repo. Once I had it, it was simple to remove the elements I didn't want. A simple step with hindsight, but it did take a bit of research when you're completely new to the world of Jekyll and Chirpy.
 
 ### Adding my custom image
 Again, with hindsight this is so simple to understand, but it did take a bit of learning. Initially, I was adding my png file to where the other site assets were because that would make sense right? Just drop the png into _site/assets and job done?! Wrong. It turns out that directory is rebuilt with every build, and actually gets assets from the root assets directory of the project. So I'd put my png in, build the site, and get confronted with... no image. It was only when I realised the photo was being removed with every build that I realised it needed to go elsewhere.
@@ -42,4 +42,4 @@ I'd like to tackle the following:
 - Remove the 'Some rights reserved' message from the footer - I'm not a fan of it. 
 - Change the mailto: link - it opens in a new page, and generally seems more complicated than it needs to be?
 
-But we'll see. For now, I can't recommend Chirpy enough. I may move away from it in future, I've seen Hugo getting a lot of attention, but that's a problem for future me!
+But we'll see. For now, I can't recommend Chirpy enough. I may move away from it in future, I've seen Hugo getting a lot of attention, but that's a problem for future me.
