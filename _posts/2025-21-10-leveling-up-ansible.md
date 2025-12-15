@@ -43,7 +43,7 @@ To this much cleaner look:
 These handlers only fire if notified by tasks, which is perfect. I've kept their order the same because I want systemd reloading before restarting services. It's so much cleaner and the playbook is running better on servers that have already been deployed as a result. 
 
 ## Group Variables and Multi-Environment Setup
-One environment is great but it didn't suit for a number of reasons. Firstly, it's not what enterprises are about. Secondly, I've hit a point where I'd like multiple builds of my API running, plus I'm planning on building a front-end in React and don't want that interfering with my lovely and stable prod environment. Thirdly, I'm actually using my meal planning tool to... plan meals! 
+One environment is great but it didn't suit for a number of reasons. Firstly, it's not what enterprises are about. Secondly, I've hit a point where I'd like multiple builds of my API running, plus I'm planning on building a front-end in React and don't want that interfering with my lovely and stable prod environment. Thirdly, I'm actually using my meal planning tool... to plan meals! 
 
 As a result, I knew I need to make these playbooks flexible and generic quickly. Traditionally, to me that means variables. It's what I'd done in Terraform, PowerShell, you name it, variables are typically the answer to reusable and flexible code. Ansible is no exception here. I went with the following directory structure:
 ```
@@ -58,15 +58,13 @@ As a result, I knew I need to make these playbooks flexible and generic quickly.
         │   └── all.yaml
         └── inventory.yaml
 ```
-This wasn't easy - I remember having a real battle trying to get the group_vars yaml file recognised when I specified the inventory in the ```ansible-playbook``` command. But this hierarchy works really well. To run it, I do the following command ```ansible-playbook playbooks/setup_db.yaml -i inventory/dev/inventory.yaml``` and just change the environment of the inventory file. 
+This wasn't easy - I remember having a real battle trying to get the group_vars yaml file recognised when I specified the inventory in the ```ansible-playbook``` command. But this hierarchy works really well. To run it, I do the following command ```ansible-playbook playbooks/setup_db.yaml -i inventory/dev/inventory.yaml``` and just change the path of the inventory file. 
 
-I went with all.yaml initially because it's my playbook that filters the inventory for a given group of hosts. Perhaps I'd be better off splitting these out into something like db_servers.yaml and web_servers.yaml, but I need material for the next part in this series! 
+For vars, I went with group_vars and all.yaml initially because it's my playbook that filters the inventory for a given group of hosts. Perhaps I'd be better off splitting these out into something like db_servers.yaml and web_servers.yaml.
 
 ## Postgres Improvements
-So many changes to the setup_db.yaml playbook! So this was mainly about automating the final things I had to do when manually when setting up the new dev environment. Things like configuring pg_hba.conf to allow the mealplanner database user to actually sign in from the Ansible control node, configuring listening addresses so that the db is available to the web servers, and obviously sorting the handlers out. I finally merged all the package installation tasks into one too, what a world.
-
-Once that's merged into my master branch, definitely check it out to see the improvement. 
+There are many changes to the setup_db.yaml playbook. This was mainly about automating the final things I had to do when manually when setting up the new dev environment. Things like configuring pg_hba.conf to allow the mealplanner database user to actually sign in from the Ansible control node, configuring listening addresses so that the db is available to the web servers, and obviously sorting the handlers out. I finally merged all the package installation tasks into one too, what a world.
 
 ## Future Work
-I still need to secure my secrets. I started doing it as part of the same work above but I need to hit the videos and revisit Ansible vault. It definitely seems like the way to go without going the cloud route. I'm not opposed to that, but it does mean cost for very little benefit here. That'll be one for the roadmap once I'm happy "on-prem" is complete. 
+I still need to secure my secrets. I started doing it as part of the same work above but I need to hit the videos and revisit Ansible vault. It definitely seems like the way to go without going the cloud route. I'm not opposed to that, but it does mean cost for very little benefit here. That'll be one for the roadmap once I'm happy on-prem is complete. 
 

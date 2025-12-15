@@ -8,7 +8,7 @@ description: A post-incident review detailing how I recovered from Terraform sta
 ---
 
 ## The Incident
-Let me begin by outlining that I'm well aware this wasn't my finest moment. Let me set the scene. I was recently experimenting with replacing Windows as my main OS with some flavour of Linux. I went for Ubuntu Desktop (I should've chosen Mint or anything that doesn't have Snap) and thought "yep, let's just wipe Windows. It's all backed up by OneDrive, Steam Cloud, whatever. It's 2025, and I don't do anything special right? Very wrong. Turns out, despite having two other spinning drives this could've lived on, I chose to clone my homelab repo to C:, exclude the state files in .gitignore and then delete said state files by wiping the partition. Great! Just wonderful, in fact. And I only realised about a month on, because my Terraform production environment is incredibly static, it turns out. So here we are, my first 'incident'.
+Let me begin by outlining that I'm well aware this wasn't my finest moment. Let me set the scene. I was recently experimenting with replacing Windows as my main OS with some flavour of Linux. I went for Ubuntu Desktop (I should've chosen Mint or anything that doesn't have Snap) and thought "yep, let's just wipe Windows. It's all backed up by OneDrive, Steam Cloud, whatever. It's 2025, and I don't do anything special right?" Very wrong. Turns out, despite having two other spinning drives this could've lived on, I chose to clone my homelab repo to C:, exclude the state files in .gitignore and then delete said state files by wiping the partition. Great! Just wonderful, in fact. And I only realised about a month on, because my Terraform production environment is incredibly static, it turns out. So here we are, my first 'incident'.
 
 Every cloud... It has taught me some great things about Terraform import, where it fails, and the work needed to make sure you don't accidentally delete your entire environment and all the VM disks with it. Fortunately, and I'll give myself credit here, my experience with systems and infrastructure generally meant I was able to recover with just a bit of learning, some tedious work, and a bruised ego.
 
@@ -26,12 +26,13 @@ To run this, you need to know the proxmox node that the VM is running on, qemu i
 
 If you're using a terraform module file, like I am here, you'll need to stitch together the resource name. To me, it looks like it's basically:
 ```
-module.<resource name> from your tf file + <resource type>.<resource name> from your module file. 
+module.<resource name> from your tf file + <resource type>.<resource name> from your module source file. 
 ```
 
 Once you've got all of that, you can create and run those commands. My one piece of advice here is to absolutely double, triple, quadruple check your VM ID before running this. It's quite crucial that each VM is appropriately mapped to the corresponding terraform resource. 
 
 Follow this up with a ```terraform plan``` command to 1) refresh the state and 2) get the lay of the land and see what Terraform thinks of your new state file. In my case, it didn't think much of it and wanted to completely remove my existing disks then recreate them. Which is absolutely not okay.
+
 ## Terraform import failings
 So, onto the state file itself then. In my case, there were a couple of key lines that were forcing this destroy action:
 ```
@@ -73,7 +74,7 @@ What I mean by that is every time I go to run another plan, I get this:
 Where it's seemingly convinced the disks are the wrong way around. I've tried all sorts here - manually swapping the json object order in the disk array in my tfstate file, swapping the id values in the state file manually, running a ```terraform apply``` just for this resource to see if it'll fix itself. Nothing works. It causes cloud-init to run again when I apply it the first time, but then nothing of note changes in Proxmox after, so I'm chalking this up as one to live with for now.
 
 ## Learnings
-Boy where do I even begin. First - back up your damn state files! Ideally, use some sort of remote state option. This whole thing would've been avoided had I done that from the start. I'll be doing a lot of research here I think, but at the very least I'll be creating some sort of script that runs on a schedule to copy my state file to OneDrive so that it at least gets backed up. 
+Where do I even begin? First - back up your damn state files! Ideally, use some sort of remote state option. This whole thing would've been avoided had I done that from the start. I'll be doing a lot of research here I think, but at the very least I'll be creating some sort of script that runs on a schedule to copy my state file to OneDrive so that it at least gets backed up. 
 
 I've also moved my local repo clone to any other drive, in my case E, but that's an old spinning hard drive that could die at any moment so I really should get that script created... 
 
