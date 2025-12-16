@@ -1,10 +1,10 @@
 ---
-title: Fixing initial beginner Terraform mistakes
+title: Fixing beginner Terraform mistakes
 date: 2025-12-16 14:00:00 +0000
 categories: [Terraform]
 tags: [terraform,devops,proxmox]
 author: richardnye
-description: Fixing my beginner Terraform mistakes
+description: Fixing my beginner Terraform mistakes when securing secrets, segregating environments, and creating child modules.
 ---
 
 ## Introduction
