@@ -8,7 +8,7 @@ description: Fixing my beginner Terraform mistakes when securing secrets, segreg
 ---
 
 ## Introduction
-Terraform is the first area I revisited as part of my homelab project. I'd used it previously (a long time before this) and was eager to revise what I knew and continue learning, because frankly I'd forgotten most of it. I've also been moving fast with this homelab; the whole point was to not get bogged down in the minutia and to keep momentum up. The goal was to avoid having to watch hours of YouTube courses and to get something tangible created and working. 
+Terraform is the first area I revisited as part of my homelab project. I'd used it previously (a long time before this) and was eager to revise what I knew and continue learning, because frankly I'd forgotten most of it. I've also been moving fast with this homelab; the whole point was to not get bogged down in the minutiae and to keep momentum up. The goal was to avoid having to watch hours of YouTube courses and to get something tangible created and working. 
 
 That's great initially, but it does lead to two issues:
 1) You end up with skill gaps that you don't even know exist.
