@@ -14,9 +14,7 @@ That's great initially, but it does lead to two issues:
 1) You end up with skill gaps that you don't even know exist.
 2) The quality of code you produce isn't that great.
 
-However, that's not all bad news. I find that iterating is a great way to learn and making mistakes in a safe homelab environment offers many opportunities.
-
-Even with all the theoretical knowledge in the world, you'll still likely make mistakes somewhere. Let's discuss mine and how I've improved this week.
+However, it's not all bad news; iterating on past work is how I learn best.
 
 ## Terraform Mistakes
 ### 1) Hardcoding sensitive cloud-init data
