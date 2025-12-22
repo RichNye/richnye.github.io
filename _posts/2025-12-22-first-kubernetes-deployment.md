@@ -26,7 +26,7 @@ The current architecture is dedicated VMs for each tier.
 This is the end goal, purely from a career perspective. I'll be completely upfront that this feels like total overkill for such a simple three-tier web application. My app is extremely static, very simple, and doesn't see much traffic. But the goal of this blog is to map that transition from typical VM infrastructure to something more modern, possibly cloud-based. Kubernetes is the go-to that many companies require knowledge of, hence the move.
 
 Kubernetes shifts the architecture in many ways. Here's a few:
-1) It's no longer VMs based on app tier - what I mean by that is that it's not a case of web content on this VM, HAProxy on another, DB lives here. Now my app's VMs will become one of two things: part of the Kubernetes control plane, or a worker node that hosts containers. 
+1) It's no longer VMs based on app tier - what I mean by that is that it's not a case of web content on one VM, HAProxy on another, DB lives here. Now my app's VMs will become one of two things: part of the Kubernetes control plane, or a worker node that hosts containers. 
 2) HAProxy gets replaced by Traefik - at least for now. I'm nowhere near advanced enough to debate the differences. I'm just following out-of-the-box common decisions, because I trust Kubernetes/k3s engineers more than myself here.
 3) My entire CD pipeline needs to change - CI should remain fairly static in that we merge changes, test the code, build the container again, and upload it to Docker Hub. But CD changes completely, and I don't know how that looks currently. All I know is it'll no longer be Ansible copying artifacts to web servers.
 
