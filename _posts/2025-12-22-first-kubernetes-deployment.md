@@ -15,10 +15,10 @@ First, though, let me give some context into the app I'll be running inside Kube
 ## Background - what app am I running?
 I've covered this in numerous posts before, namely [containerising ASP.NET Core applications](/posts/containerising-aspnet-core-applications), so I'll keep this brief. My app consists of the following architecture currently:
 
-1) HAProxy load balancer - this terminates TLS, routes depending on URL, does health checks on backend server instances, all the typical load balancer goodness. 
-2) Frontend - this is literally a one page static site, served by nginx. 
-3) API - this is an ASP.NET Core MVC API, using kestrel as the web server to keep things standard.
-4) PostgreSQL database - runs on its own dedicated VM. Typical connection string used to connect and return rows.
+1) **HAProxy load balancer** - this terminates TLS, routes depending on URL, does health checks on backend server instances, all the typical load balancer goodness. 
+2) **Frontend** - this is literally a one page static site, served by nginx. 
+3) **API** - this is an ASP.NET Core MVC API, using kestrel as the web server to keep things standard.
+4) **PostgreSQL database** - runs on its own dedicated VM. Typical connection string used to connect and return rows.
 
 The current architecture is dedicated VMs for each tier.
 
@@ -26,9 +26,9 @@ The current architecture is dedicated VMs for each tier.
 This is the end goal, purely from a career perspective. I'll be completely upfront that this feels like total overkill for such a simple three-tier web application. My app is extremely static, very simple, and doesn't see much traffic. But the goal of this blog is to map that transition from typical VM infrastructure to something more modern, possibly cloud-based. Kubernetes is the go-to that many companies require knowledge of, hence the move.
 
 Kubernetes shifts the architecture in many ways. Here's a few:
-1) It's no longer VMs based on app tier - what I mean by that is that it's not a case of web content on one VM, HAProxy on another, DB lives here. Now my app's VMs will become one of two things: part of the Kubernetes control plane, or a worker node that hosts containers. 
-2) HAProxy gets replaced by Traefik - at least for now. I'm nowhere near advanced enough to debate the differences. I'm just following out-of-the-box common decisions, because I trust Kubernetes/k3s engineers more than myself here.
-3) My entire CD pipeline needs to change - CI should remain fairly static in that we merge changes, test the code, build the container again, and upload it to Docker Hub. But CD changes completely, and I don't know how that looks currently. All I know is it'll no longer be Ansible copying artifacts to web servers.
+1) **It's no longer VMs based on app tier** - what I mean by that is that it's not a case of web content on one VM, HAProxy on another, DB lives here. Now my app's VMs will become one of two things: part of the Kubernetes control plane, or a worker node that hosts containers. 
+2) **HAProxy gets replaced by Traefik** - at least for now. I'm nowhere near advanced enough to debate the differences. I'm just following out-of-the-box common decisions, because I trust Kubernetes/k3s engineers more than myself here.
+3) **My entire CD pipeline needs to change** - CI should remain fairly static in that we merge changes, test the code, build the container again, and upload it to Docker Hub. But CD changes completely, and I don't know how that looks currently. All I know is it'll no longer be Ansible copying artifacts to web servers.
 
 ## Quick Learning Check
 Here's what I learned while studying the theory:
@@ -108,6 +108,7 @@ I'll just rattle these off because if you've read this far then you're probably 
 3) Resource limits - currently my frontend/API could battle each other and impact the other. I need to specify CPU/memory limits.
 4) Add a host to my Ingress config - currently it'll accept any host, ideally I need to restrict this to something like kubernetes.meals.rnye.tech and either customise my hosts file or setup global DNS in Cloudflare.
 5) Add various probes like readiness and health - currently we're flying blind a bit.
+6) Add a new ExternalName service for my database VM - I'd likely to play around with this concept of creating DNS records inside the cluster that refer to external resources.
 
 And generally do more research now that I've got my own resource declarations to compare to. 
 
