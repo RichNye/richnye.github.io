@@ -40,7 +40,7 @@ I've configured pg_hba.conf for my homelab, so was somewhat familiar here, but I
 
 Short answer: kinda, but not quite. 
 
-Long answer: the SSL mode paramter was set to prefer, not required. Changing that in pgAdmin to required fixed my issue and satisfied AWS. 
+Long answer: the SSL mode parameter was set to prefer, not required. Changing that in pgAdmin to required fixed my issue and satisfied AWS. 
 
 ## Restoring the DB
 Great, so we're connected using pgAdmin - let's restore the DB. I simply used the GUI on my homelab, took a basic custom backup of my db, nothing special here. Then I went to restore it to my AWS server and realised a couple of things:
@@ -52,9 +52,9 @@ Cue more errors and fixing them...
 ### Fixing DB Creation Errors
 Now creating the user was simple in pgAdmin, google that if you don't know how, and again I used a secure password knowing that this was public (albeit to my IP specifically). 
 
-So I then went to create the database, chose the new user, and was instantly hit with ```ERROR: must be member of role '<user name>```. Now my user was the same as my database name which confused things a bit, but again Google to the rescue. Basically the user I connected to the databse instance needed to be a member of the new user role. Right-click your db instance user in pgAdmin > properties > Membership tab > add a new membership to the user (admin wasn't needed here) > Save.
+So I then went to create the database, chose the new user, and was instantly hit with ```ERROR: must be member of role '<user name>```. Now my user was the same as my database name which confused things a bit, but again Google to the rescue. Basically the user I connected to the database instance needed to be a member of the new user role. Right-click your db instance user in pgAdmin > properties > Membership tab > add a new membership to the user (admin wasn't needed here) > Save.
 
-That simple, in the end. Creating the new database with the new user as the owner then worked. Just a quick of Postgres here, I guess. 
+That simple, in the end. Creating the new database with the new user as the owner then worked. Just a quirk of Postgres here, I guess. 
 
 The restore then worked and everything was happy. 
 
