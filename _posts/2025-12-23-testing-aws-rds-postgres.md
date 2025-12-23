@@ -13,7 +13,7 @@ I created a new AWS free tier account a few months ago and the expiry date is ra
 Disclaimer: this is extremely quick and dirty. It's basically a mini how-to using the AWS GUI and pgAdmin, to get *something* spun up to test with as opposed to a full-on migration. Don't follow this if you're wanting a real production-grade migration path. 
 
 ## Migration strategies
-From what I've seen, the preferred migration strategy is to actually create an HA pair with your RDS instance as the standby. This makes a lot of sense and is something I'll definitely be trying in future. 
+From what I've seen, the preferred migration strategy is to configure replication with your RDS instance and then cutover. This makes a lot of sense and is something I'll definitely be trying in future. 
 
 What I've gone with, though, is a simple GUI-driven backup/restore using pgAdmin. I've gone with this because my app doesn't actually have any data manipulation traffic; it's simple reads only at the moment. This means I don't need a cutover window because there's no deltas that I'll be missing. 
 
