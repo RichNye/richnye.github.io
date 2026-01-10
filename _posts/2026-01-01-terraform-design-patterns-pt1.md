@@ -1,6 +1,6 @@
 ---
 title: Terraform Design Patterns Part 1
-date: 2026-01-01 11:48:00 +0000
+date: 2026-01-10 11:48:00 +0000
 categories: [aws,terraform]
 tags: [aws,terraform,devops]
 author: richardnye
@@ -15,12 +15,12 @@ I've been on a bit of a Terraform frenzy mentally for the past two weeks. I've f
 ## What actually is a Terraform Environment?
 This might sound stupid to talk about, but it's worth clarifying because I struggled with this a bit. An infrastructure environment to me is obvious - dev.app.com, stage.app.com, uat.app.com, prod.app.com, whatever it is. Each with its own compute, networking, storage setup.
 
-In Terraform, though, you want to respect DRY and minimise the amount of code. That means your resource definitions are actually used across multiple environments, with variables and modules to make your Terraform code environment-agnostic. You supply tfvars files, for example, per environment that specify things like environment name, subnet, how many frontend containers you want this environment to have, that sort of thing. 
+In Terraform, though, you want to respect DRY and minimise the amount of code. That means your resource definitions are actually used across multiple environments, with variables and modules to make your Terraform code environment-agnostic. You supply tfvars files, for example, per environment that specify things like environment name, subnet, how many frontend containers you want this particular environment to have, that sort of thing. Terraform then takes those inputs and creates resources catered to it.
 
 So actually a Terraform environment is **state and variables** combined. With that in mind, how do we actually design the file/folder structure of a Terraform repository to account for multiple environments? That's what today's post is about.
 
 ## Design Patterns for Terraform
-So I've discovered this boils down to two separate areas that you have to design:
+So I've discovered this boils down to two separate areas that you have to design:<br>
 1) Modules - when to use them, the directory structure, and how many tf files you want per module (how to name them, basically). Not including the standard variables.tf and outputs.tf, though. We're talking to main.tf or to go rogue.<br>
 2) Environments - this was the big one and what I'll be talking about in this post.<br>
 
@@ -32,7 +32,7 @@ I got my homelab working with IaC? Great. But I'm one person, using the same mac
 
 I won't be going into detail here. There's plenty of good resources that cover this in-depth. Just go onto YouTube and search for 'terraform multiple environments' or similar.
 
-Here's the patterns I found:
+Here's the patterns I found. If you want more detail,  [this video explains the advantages/disadvantages of most outlined here.](https://www.youtube.com/watch?v=YcfWKy8YiLo)
 
 ### One repository, many branches
 As it says on the tin - you use one repository but each environment gets a branch. I didn't like the idea of this for me, personally, because it turns it all into a complete faff.
