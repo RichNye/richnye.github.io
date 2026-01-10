@@ -24,7 +24,7 @@ So I've discovered this boils down to two separate areas that you have to design
 1) Modules - when to use them, the directory structure, and how many tf files you want per module (how to name them, basically). Not including the standard variables.tf and outputs.tf, though. We're talking to main.tf or to go rogue.<br>
 2) Environments - this was the big one and what I'll be talking about in this post.<br>
 
-The problems you're trying to solve here are two-fold:
+The problems you're trying to solve here are two-fold:<br>
 1) Keeping state as small as possible, with a small blast radius.<br>
 If you don't, then every refresh action grows and grows in time. Not to mention that you end up combining prod and lower environment states, which to me is a big no. Corruption, accidental deletions/modifications, etc. could cause a mess that spans environments.<br>
 2) Accounting for multiple people and multiple environments.
