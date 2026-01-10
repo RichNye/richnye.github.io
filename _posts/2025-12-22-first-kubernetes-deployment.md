@@ -15,10 +15,10 @@ First, though, let me give some context into the app I'll be running inside Kube
 ## Background - what app am I running?
 I've covered this in numerous posts before, namely [containerising ASP.NET Core applications](/posts/containerising-aspnet-core-applications), so I'll keep this brief. My app consists of the following architecture currently:
 
-1) **HAProxy load balancer** - this terminates TLS, routes depending on URL, does health checks on backend server instances, all the typical load balancer goodness. 
-2) **Frontend** - this is literally a one page static site, served by nginx. 
-3) **API** - this is an ASP.NET Core MVC API, using kestrel as the web server to keep things standard.
-4) **PostgreSQL database** - runs on its own dedicated VM. Typical connection string used to connect and return rows.
+1) **HAProxy load balancer** - this terminates TLS, routes depending on URL, does health checks on backend server instances, all the typical load balancer goodness.<br> 
+2) **Frontend** - this is literally a one page static site, served by nginx.<br> 
+3) **API** - this is an ASP.NET Core MVC API, using kestrel as the web server to keep things standard.<br>
+4) **PostgreSQL database** - runs on its own dedicated VM. Typical connection string used to connect and return rows.<br>
 
 The current architecture is dedicated VMs for each tier.
 
@@ -32,11 +32,11 @@ Kubernetes shifts the architecture in many ways. Here's a few:
 
 ## Quick Learning Check
 Here's what I learned while studying the theory:
-1) Pods = the actual containers being run.
-2) ReplicaSets = ensure a specified number of the same pod are running at any given time.
-3) Services = stable networking configuration in an unstable world. Pods are designed to be short-lived, IPs change frequently, and you can't guarantee a certain route will always be there. Services ensure certain networking config *is* always there. 
-4) Deployments = a higher-level resource. We don't care about ReplicaSets or pods at this level. We tell Kubernetes what containers to run, how many we want, and the config we need to feed into them. Kubernetes makes it happen by utilising ReplicaSets and pods. Deployments can be modified and Kubernetes will automatically roll out those changes.
-5) Ingress = opening up Services to the world, but only HTTP. Or more specifically, opening up Services externally to the cluster. Requires an Ingress Controller - k3s configures Traefik by default.
+1) Pods = the actual containers being run.<br>
+2) ReplicaSets = ensure a specified number of the same pod are running at any given time.<br>
+3) Services = stable networking configuration in an unstable world. Pods are designed to be short-lived, IPs change frequently, and you can't guarantee a certain route will always be there. Services ensure certain networking config *is* always there.<br> 
+4) Deployments = a higher-level resource. We don't care about ReplicaSets or pods at this level. We tell Kubernetes what containers to run, how many we want, and the config we need to feed into them. Kubernetes makes it happen by utilising ReplicaSets and pods. Deployments can be modified and Kubernetes will automatically roll out those changes.<br>
+5) Ingress = opening up Services to the world, but only HTTP. Or more specifically, opening up Services externally to the cluster. Requires an Ingress Controller - k3s configures Traefik by default.<br>
 
 ## Folder Structure
 While this doesn't matter to Kubernetes, it does matter to me. My initial thoughts were to mimic the per-environment folder structure I've used everywhere else but then I realised this made no sense. I'll be using the same Kubernetes files everywhere, and instead utilising git branches when I need to test. So I went for the following tree:
@@ -95,20 +95,20 @@ I used ```valueFrom``` and ```configMapKeyRef/secretKeyRef``` here and it worked
 ## Mistakes
 I made a few. Let's list them here:
 
-1) Forgetting what my container ports were when I built the image - this led to bad gateway errors, because the Service was trying to map port 80 > 80 instead of 80 > 8080/8090.
-2) Forgetting to apply ConfigMaps and Secrets yaml. Yes, they need applying like any other Kubernetes object! 
-3) Forgetting to specify the mealplanner namespace - my Ingress had no idea about the Service at one point because it wasn't in the same namespace.
+1) Forgetting what my container ports were when I built the image - this led to bad gateway errors, because the Service was trying to map port 80 > 80 instead of 80 > 8080/8090.<br>
+2) Forgetting to apply ConfigMaps and Secrets yaml. Yes, they need applying like any other Kubernetes object!<br>
+3) Forgetting to specify the mealplanner namespace - my Ingress had no idea about the Service at one point because it wasn't in the same namespace.<br>
 
 I found ```kubectl describe``` extremely valuable here to see the actual events like a ConfigMap file not being found, or the Service not being found. 
 
 ## Future Work
 I'll just rattle these off because if you've read this far then you're probably getting sick of this post by now:
-1) Customise Traefik - currently it's all defaults. No TLS, no max connections, nothing. 
-2) Logging - I need a similar request log as I get now from HAProxy. Not just Traefik, though, I also need logging from my pods, logging pod restarts so I can set up alerts, the lot. 
-3) Resource limits - currently my frontend/API could battle each other and impact the other. I need to specify CPU/memory limits.
-4) Add a host to my Ingress config - currently it'll accept any host, ideally I need to restrict this to something like kubernetes.meals.rnye.tech and either customise my hosts file or setup global DNS in Cloudflare.
-5) Add various probes like readiness and health - currently we're flying blind a bit.
-6) Add a new ExternalName service for my database VM - I'd likely to play around with this concept of creating DNS records inside the cluster that refer to external resources.
+1) Customise Traefik - currently it's all defaults. No TLS, no max connections, nothing.<br> 
+2) Logging - I need a similar request log as I get now from HAProxy. Not just Traefik, though, I also need logging from my pods, logging pod restarts so I can set up alerts, the lot.<br> 
+3) Resource limits - currently my frontend/API could battle each other and impact the other. I need to specify CPU/memory limits.<br>
+4) Add a host to my Ingress config - currently it'll accept any host, ideally I need to restrict this to something like kubernetes.meals.rnye.tech and either customise my hosts file or setup global DNS in Cloudflare.<br>
+5) Add various probes like readiness and health - currently we're flying blind a bit.<br>
+6) Add a new ExternalName service for my database VM - I'd likely to play around with this concept of creating DNS records inside the cluster that refer to external resources.<br>
 
 And generally do more research now that I've got my own resource declarations to compare to. 
 

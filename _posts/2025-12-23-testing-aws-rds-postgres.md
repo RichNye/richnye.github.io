@@ -21,18 +21,18 @@ What I've gone with, though, is a simple GUI-driven backup/restore using pgAdmin
 I used the easy creation route, letting AWS dictate most settings. I'm not doing anything special here, this is quick and dirty. 
 
 One thing I did fall foul to though is needing to open my RDS instance up to the public, in a secure way. Now I might struggle with securing secrets in IaC, but when it comes to networking I find it fairly straightforward. I have a static IP at home so this was fairly easy. I did the following to modify my created instance:
-1) I let AWS generate a password for my db user, and stored it in my private password manager.
-2) I modified the instance settings to allow public access.
-3) I attempted to connect to the instance using the provided URL (*.rds.amazonaws.com) with pgAdmin and received a connection timeout.
+1) I let AWS generate a password for my db user, and stored it in my private password manager.<br>
+2) I modified the instance settings to allow public access.<br>
+3) I attempted to connect to the instance using the provided URL (*.rds.amazonaws.com) with pgAdmin and received a connection timeout.<br>
 
 ## Fixing the connection timeout
 This was textbook firewall blocking, although in the AWS world it was VPC security group inbound rules. Now the docs do specifically say you need to do this, but I did figure it out on my own with the following:
-1) Go to your RDS instance > Connectivity & Security tab
-2) Click on your VPC Security Group to be taken to the Security Group config. Click on your Security group ID (I only had one listed here)
-3) Edit inbound rules
-4) Add rule
-5) Type = PostgreSQL (note: I actually went for TCP custom and selected port 5432, AWS has then changed the type after I applied), source = My IP (which just populates the IP, AWS changes it to custom after) and for description I entered 'Home public access only'
-6) Save rules
+1) Go to your RDS instance > Connectivity & Security tab<br>
+2) Click on your VPC Security Group to be taken to the Security Group config. Click on your Security group ID (I only had one listed here)<br>
+3) Edit inbound rules<br>
+4) Add rule<br>
+5) Type = PostgreSQL (note: I actually went for TCP custom and selected port 5432, AWS has then changed the type after I applied), source = My IP (which just populates the IP, AWS changes it to custom after) and for description I entered 'Home public access only'<br>
+6) Save rules<br>
 
 I then connected again using pgAdmin and was instantly hit with a different, scary error that referenced pg_hba.conf and no encryption.
 ```"no pg_hba.conf entry for host '<ip>', user '<user>', database 'database', no encryption"``` 
@@ -44,8 +44,8 @@ Long answer: the SSL mode parameter was set to prefer, not required. Changing th
 
 ## Restoring the DB
 Great, so we're connected using pgAdmin - let's restore the DB. I simply used the GUI on my homelab, took a basic custom backup of my db, nothing special here. Then I went to restore it to my AWS server and realised a couple of things:
-1) I don't have a database ready for this to restore to
-2) I don't have a custom user created to own this db.
+1) I don't have a database ready for this to restore to<br>
+2) I don't have a custom user created to own this db.<br>
 
 Cue more errors and fixing them...
 
