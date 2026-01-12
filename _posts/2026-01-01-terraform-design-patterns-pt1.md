@@ -21,18 +21,16 @@ So actually a Terraform environment is **state and variables** combined. With th
 
 ## Design Patterns for Terraform
 So I've discovered this boils down to two separate areas that you have to design:<br>
-1) Modules - when to use them, the directory structure, and how many tf files you want per module (how to name them, basically). Not including the standard variables.tf and outputs.tf, though. We're talking to main.tf or to go rogue.<br>
+1) Modules - when to use them, the directory structure, and how you want to name your .tf files. Not including the standard variables.tf and outputs.tf, though. We're talking whether to use main.tf or to go rogue.<br>
 2) Environments - this was the big one and what I'll be talking about in this post.<br>
 
 The problems you're trying to solve here are two-fold:<br>
-1) Keeping state as small as possible, with a small blast radius.<br>
-If you don't, then every refresh action grows and grows in time. Not to mention that you end up combining prod and lower environment states, which to me is a big no. Corruption, accidental deletions/modifications, etc. could cause a mess that spans environments.<br>
-2) Accounting for multiple people and multiple environments.
+1) Keeping state as small as possible, with a small blast radius.<br><br>
+If you don't, then every resource you add causes slower state refresh. Not to mention that you end up combining prod and lower environment states, which to me is a big no. Corruption, accidental deletions/modifications, etc. could cause a mess that spans environments.<br><br>
+2) Accounting for multiple people and multiple environments.<br><br>
 I got my homelab working with IaC? Great. But I'm one person, using the same machine. The point of this blog and this journey is to progress beyond that and think like an enterprise thinks.
 
-I won't be going into detail here. There's plenty of good resources that cover this in-depth. Just go onto YouTube and search for 'terraform multiple environments' or similar.
-
-Here's the patterns I found. If you want more detail,  [this video explains the advantages/disadvantages of most outlined here.](https://www.youtube.com/watch?v=YcfWKy8YiLo)
+Here's the patterns I found. If you want more detail, [this video explains the advantages/disadvantages of most outlined here.](https://www.youtube.com/watch?v=YcfWKy8YiLo)
 
 ### One repository, many branches
 As it says on the tin - you use one repository but each environment gets a branch. I didn't like the idea of this for me, personally, because it turns it all into a complete faff.
@@ -43,7 +41,7 @@ Even more of a faff than a branch for each environment, this means multiple repo
 ### One repository, many folders
 Basically separate folders per environment, using modules as a base. I've used this in my homelab, and it works really well. But I can't see it scaling well if you start using ephemeral environments, or even multiple people. It's useful for separating state locally, but I've started using remote state and supplying different keys to solve that problem, as we'll cover today.
 
-### One repository, remote state with unique keys (what I've gone with)
+### One repository, remote state with separate files per env (what I've gone with)
 Basically the same as above, but now it's all about one main Terraform folder (not separate directories per environment) and utilising remote state's ability to provide a state file key. We'll be covering this today.
 
 ## Remote State (and how it helps solve this problem)
@@ -58,7 +56,7 @@ For AWS specifically, remote state seems fantastic at solving this problem. The 
             └── terraform.tfstate
 ```
 
-One S3 bucket for all Terraform state (this doesn't have to be the case, it's just for my purpose), separate folders per app/project, separate subfolders for each environment that each contain the state file. I saw some deprecated stuff about using DynamoDB for locking, but actually Terraform handles this now, just specify ```use_lockfile = true``` in your backend definition.
+One S3 bucket for all Terraform state (this doesn't have to be the case, it's just for my purpose), separate folders per app/project, separate subfolders for each environment that each contain the state file. I saw some deprecated stuff about using DynamoDB for locking, but actually Terraform handles this now, just specify ```use_lockfile = true``` in your backend definition. 
 
 But you still need to supply a key so that Terraform knows which state file you're using when you refresh/plan/apply. In my repo, I've got this:
 
@@ -83,5 +81,5 @@ The two main drawbacks I see are that it's a bit of a faff having to remember to
 ## Conclusions
 I've learned a lot here, and I think it's something that most Terraform learners will eventually hit. Design patterns for any code are one of the more advanced features and force you to think differently from a small-scale homelab. Hopefully I've made the right choice here, no doubt there'll be a follow-up in a few months that tears this to shreds!
 
-As always, reach out to me with thoughts or critique!
+As always, reach out to me with thoughts or critique.
 
