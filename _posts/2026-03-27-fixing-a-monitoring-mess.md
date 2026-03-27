@@ -57,7 +57,7 @@ For the new alerts, I'm experimenting with the Azure app. We don't use it curren
 ## 3) Create new alerts
 I know this sounds counter-intuitive, but bear with me. Create what I've been calling "sister alerts". Our current alerting isn't bad from a bug-finding perspective and it'll be difficult to justify a change to developers. The issue is the alerts are too broad, things like throwing an error if any non-200 response is received from an external system. But in some instances, a 404 is a valid business response caused by our customers. They might be terrible from an ops perspective, but they're serving a purpose somewhere.
 
-So take the existing alert and refine it greatly, most of the work has actually already been done for me. Target 5xx or timeouts. What does an actual outage look like in the logs? Use that to refine your KQL wueries. Make your thresholds high enough so that they don't trigger every 5 minutes but not too high so that outages are missed. Set a threshold that also accounts for minor blips that don't require action - okay, that third-party was down for all of 3 minutes then recovered? No action needed? Shift it to a dashboard.
+So take the existing alert and refine it greatly, most of the work has actually already been done for me. Target 5xx or timeouts. What does an actual outage look like in the logs? Use that to refine your KQL queries. Make your thresholds high enough so that they don't trigger every 5 minutes but not too high so that outages are missed. Set a threshold that also accounts for minor blips that don't require action - okay, that third-party was down for all of 3 minutes then recovered? No action needed? Shift it to a dashboard.
 
  Here's an example of an old alert:
 ```
