@@ -52,12 +52,14 @@ That's it. I want to know when the system coughs immediately. I don't mean a sli
 ## 2) Email is no longer viable
 So use literally anything else. Alert blindness and fatigue has ruled out email entirely for alerting. That could mean going all out and using something like PagerDuty, but it could also be as simple and cost-effective by utilising something like a Teams channel, or even the Azure app. It just needs to be something completely new to the business.
 
-For the new alerts, I'm experimenting with the Azure app. We don't use it currently and it's free. It also allows us to target specific users in the same way as email, keeping alerts relevant. I want users to have somewhere completely new and uniquely for alerting. Whether that's the Azure App remains to be seen, but the point is it's significantly different from email.
+For the new alerts, I'm experimenting with the Azure app. We don't use it currently and it's free. It also allows us to target specific users in the same way as email, keeping alerts relevant. I want users to have somewhere completely new and unique for alerting. Whether that's the Azure App remains to be seen, but the point is it's significantly different from email.
 
 ## 3) Create new alerts
-I know this sounds counter-intuitive, but bear with me. Create what I've been calling "sister alerts". Our current alerting isn't bad, but it'll be difficult to justify a change to developers because they're using these alerts. The issue is the alerts are too broad, things like throwing an error if any non-200 response is received from an external system. But in some instances, a 404 is a valid business response caused by our customers. 
+I know this sounds counter-intuitive, but bear with me. Create what I've been calling "sister alerts". Our current alerting isn't bad from a bug-finding perspective and it'll be difficult to justify a change to developers. The issue is the alerts are too broad, things like throwing an error if any non-200 response is received from an external system. But in some instances, a 404 is a valid business response caused by our customers. They might be terrible from an ops perspective, but they're serving a purpose somewhere.
 
-So take the existing alert and refine it greatly. Target 5xx or timeouts. What does an actual outage look like in the logs? Make your thresholds high enough so that they don't trigger every 5 minutes. Here's an example of the old alert:
+So take the existing alert and refine it greatly, most of the work has actually already been done for me. Target 5xx or timeouts. What does an actual outage look like in the logs? Use that to refine your KQL wueries. Make your thresholds high enough so that they don't trigger every 5 minutes but not too high so that outages are missed. Set a threshold that also accounts for minor blips that don't require action - okay, that third-party was down for all of 3 minutes then recovered? No action needed? Shift it to a dashboard.
+
+ Here's an example of an old alert:
 ```
 dependencies
 | where target in (<redacted>)
@@ -84,7 +86,7 @@ dependencies
 ```
 This handles it very differently and has already proven effective - the old alert has fired 4 times yet this one is yet to trigger. As mentioned, we only care about external server errors, things that result in that service being unavailable; 5xx and timeouts are the key here. Not only that, but pulling back the total and calculating the failure rate means we can now trigger the alert based on failure percentage. We can also only trigger the alert if we're receiving meaningful traffic. 3 logs at 2am isn't enough data, and 1 failure would equal 33% failure rate. So why bother? 
 
-It requires a change in alert threshold - we're looking for 1 row to exist. This query either returns a row if the failure rate and traffic conditions are met, which should trigger an alert, or it returns nothing (so all is well).
+It requires a change in alert threshold - we're looking for 1 row to exist instead of 10. This query either returns a row if the failure rate and traffic conditions are met, which should trigger an alert, or it returns nothing (so all is well).
 
 ## 4) Alerts should prompt action always
 I want to hammer this home to the team. If an alert fires, we should have to act. It shouldn't be an option to simply ignore the alert, because then what was the point of the alert? Ideally this would initiate some sort of failover to a different external integration, but that's not always possible commercially or technically. At the very least it could be a status update, an email letting the business know, a message on the site or socials. Whatever suits your business and situation.
