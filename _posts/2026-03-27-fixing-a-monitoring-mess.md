@@ -52,7 +52,7 @@ That's it. I want to know when the system coughs immediately. I don't mean a sli
 ## 2) Email is no longer viable
 So use literally anything else. Alert blindness and fatigue has ruled out email entirely for alerting. That could mean going all out and using something like PagerDuty, but it could also be as simple and cost-effective by utilising something like a Teams channel, or even the Azure app. It just needs to be something completely new to the business.
 
-For the new alerts, I'm experimenting with the Azure app. We don't use it currently and it's free. It also allows us to specific target users in the same way as email, keeping alerts specific. I want users to have somewhere completely new and uniquely for alerting. Whether that's the Azure App remains to be seen, but the point is it's significantly different from email.
+For the new alerts, I'm experimenting with the Azure app. We don't use it currently and it's free. It also allows us to target specific users in the same way as email, keeping alerts relevant. I want users to have somewhere completely new and uniquely for alerting. Whether that's the Azure App remains to be seen, but the point is it's significantly different from email.
 
 ## 3) Create new alerts
 I know this sounds counter-intuitive, but bear with me. Create what I've been calling "sister alerts". Our current alerting isn't bad, but it'll be difficult to justify a change to developers because they're using these alerts. The issue is the alerts are too broad, things like throwing an error if any non-200 response is received from an external system. But in some instances, a 404 is a valid business response caused by our customers. 
