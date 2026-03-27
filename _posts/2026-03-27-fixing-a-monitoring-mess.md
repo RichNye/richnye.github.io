@@ -19,7 +19,7 @@ Why this is worth a blog post is because of the learnings I've found from it.
 ## Alert Blindness (aka Alert Fatigue)
 For those that have never come across this term, it's basically where alerts fire so much that you become desensitised to them. The thought of "oh this has been firing for ages, and the last few times I investigated, it turned out to be false-positive," so you just... don't investigate. 
 
-That's exactly what has happened to this team. Alerts may be investigated periodically, but it's already led to slow response to outages, or a complete miss entirely. Alerting shifts from system to waiting for a senior business manager to shout. It's my one biggest pet peeve; it's poor service, it's reactive, and it looks lazy and unprofessional.
+That's exactly what has happened to this team. Alerts may be investigated periodically, but it's already led to slow response to outages, or a complete miss entirely. Alerting shifts from a system telling you to waiting for a senior business manager to shout.
 
 # How we got here
 I wanted to answer the following questions:
