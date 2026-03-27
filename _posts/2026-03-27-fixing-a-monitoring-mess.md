@@ -32,7 +32,7 @@ Standard stuff, but it's led to some interesting findings. Ultimately it's a sig
 It's important to remember that the intentions are clearly good; they want awareness of errors to identify bugs, service outages, etc. The issue is there are simply too many alerts that are firing too often. 
 
 ## Dev vs SRE alerts
-There's been a battle between Ops and Dev - Ops want the alerts reduced, Devs want them to remain so that we're aware of issues as they happen. Emails will keep firing because there's resistance to stopping them and it's a hard argument to make because both sides have valid points. So don't; invest your energy into creating a new solution that works.
+There's been a battle between Ops and Dev - Ops want the alerts reduced, Devs want them to remain so that we're aware of issues as they happen. Emails will keep firing because there's resistance to stopping them and it's a hard argument to make because both sides have valid points. So don't try to stop them, there's simply no time; invest your energy into creating a new solution that works.
 
 This has led me to an interesting realisation; there are two types of alert at play here: those for developers, and those for service uptime. To put it another way, there's alerts for functionality and there's alerts for availability. 
 
