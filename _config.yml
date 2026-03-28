@@ -16,10 +16,10 @@ timezone:
 
 title: Richard Nye # the main title
 
-tagline: Transitioning from sysadmin to DevOps # it will display as the subtitle
+tagline: Infrastructure, code, and learning by building  # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
-  A blog about transitioning from sysadmin to DevOps, cloud, coding, and other tech interests.
+  Infrastructure, cloud, application development, and everything in between
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
@@ -39,10 +39,10 @@ social:
   links:
     # The first element serves as the copyright owner's link
     #- https://twitter.com/username # change to your Twitter homepage
-    #- https://github.com/username # change to your GitHub homepage
+    - https://github.com/ # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    - https://www.linkedin.com/in/richnye
 
 # Site Verification Settings
 webmaster_verifications:
@@ -192,6 +192,7 @@ defaults:
     values:
       layout: page
       permalink: /:title/
+      sitemap: false
 
 sass:
   style: compressed
