@@ -8,7 +8,7 @@ description: Deploying an ASP.NET Core application to Kubernetes as a beginner
 ---
 
 ## Introduction
-This week is all about Kubernetes and deploying an actual application/platform. In my [previous post](/posts/venturing-into-kubernetes), I'd spoken about spinning up a cluster using k3s and now it's all about actually hosting something meaningful in that cluster. Today we'll cover the process, mistakes I made, and where I envisage going next. 
+This week is all about Kubernetes and deploying an actual application/platform. In my [previous post](/posts/getting-started-with-kubernetes-using-k3s), I'd spoken about spinning up a cluster using k3s and now it's all about actually hosting something meaningful in that cluster. Today we'll cover the process, mistakes I made, and where I envisage going next. 
 
 First, though, let me give some context into the app I'll be running inside Kubernetes.
 
