@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /tags/
+Disallow: /categories/
+Disallow: /archives/
+Disallow: /page*/
+
+Sitemap: https://rnye.tech/sitemap.xml
