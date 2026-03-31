@@ -73,16 +73,18 @@ You can clearly see how wide it is - basically any failed, non-200 response trig
 The new alert:
 ```
 dependencies
-| where target in (<redacted>)
-| where resultCode startswith "5"
+| where target in ("uk.api.edq.com", "api.edq.com", "ws.ondemand.qas.com")
+| summarize
+    TotalCalls = count(),
+    Failures = countif(
+               resultCode startswith "5"
     or isnull(resultCode)
     or resultCode == ""
-| summarize 
-    TotalCalls = count(),
-    Failures = countif(success == false),
-    FailureRate = round(100.0 * countif(success == false) / count(), 1)
-| where TotalCalls >= 10  // ignore windows with negligible traffic
-| where FailureRate >= 30
+           )
+    by target
+| extend FailureRate = round(100.0 * Failures / TotalCalls, 1)
+| where TotalCalls > 10
+| where FailureRate > 50
 ```
 This handles it very differently and has already proven effective - the old alert has fired 4 times yet this one is yet to trigger. As mentioned, we only care about external server errors, things that result in that service being unavailable; 5xx and timeouts are the key here. Not only that, but pulling back the total and calculating the failure rate means we can now trigger the alert based on failure percentage. We can also only trigger the alert if we're receiving meaningful traffic. 3 logs at 2am isn't enough data, and 1 failure would equal 33% failure rate. So why bother? 
 
