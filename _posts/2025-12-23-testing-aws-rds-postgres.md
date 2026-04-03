@@ -4,7 +4,7 @@ date: 2025-12-23 13:48:00 +0000
 categories: [aws]
 tags: [aws,rds,postgres]
 author: richardnye
-description: Testing AWS RDS with PostgreSQL and documenting the basic test environment setup and errors faced.
+description: Setting up AWS RDS with PostgreSQL, fixing VPC inbound rules and pgAdmin SSL errors, and restoring a homelab database backup to the cloud.
 ---
 
 ## Introduction

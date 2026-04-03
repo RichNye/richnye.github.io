@@ -4,7 +4,7 @@ date: 2025-10-14 13:48:00 +0100
 categories: [homelab,devops]
 tags: [homelab,devops,ansible,terraform,github-actions]
 author: richardnye
-description: An introduction to my self-hosted homelab built on Proxmox, Terraform, and Ansible, including the goals, setup, and a .NET Core API.
+description: Overview of a self-hosted homelab on Proxmox, managed with Terraform and Ansible, hosting a .NET Core MealPlanner API across dev and prod VMs.
 ---
 
 ## Introducing the homelab

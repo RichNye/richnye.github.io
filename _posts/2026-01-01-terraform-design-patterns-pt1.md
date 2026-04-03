@@ -1,10 +1,10 @@
 ---
 title: Terraform Design Patterns Part 1
-date: 2026-01-10 11:48:00 +0000
+date: 2026-01-01 11:48:00 +0000
 categories: [aws,terraform]
 tags: [aws,terraform,devops]
 author: richardnye
-description: Discussing Terraform design patterns for multiple environments
+description: Comparing Terraform strategies for managing multiple environments: branches, separate repos, directories, and remote state with separate S3 backend keys.
 ---
 
 ## Introduction

@@ -4,7 +4,7 @@ date: 2025-10-28 15:31:00 +0000
 categories: [terraform]
 tags: [github,terraform,sysadmin,devops,proxmox]
 author: richardnye
-description: A post-incident review detailing how I recovered from Terraform state file loss in Proxmox
+description: How I recovered a Proxmox homelab after accidentally deleting the Terraform state file — using terraform import and state edits to avoid infrastructure loss.
 ---
 
 ## The Incident

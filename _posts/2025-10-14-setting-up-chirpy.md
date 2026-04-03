@@ -4,7 +4,7 @@ date: 2025-10-14 11:10:00 +0100
 categories: [jekyll]
 tags: [blog,jekyll,github]
 author: richardnye
-description: Configuring Jekyll and Chirpy from scratch in Windows and WSL
+description: How to set up Jekyll and the Chirpy theme on Windows with WSL, covering gem dependency errors, missing build tools, and template customisation.
 ---
 
 As I alluded to in my first blog post, I ran into some issues when I first attempted to build the Chirpy starter template to test it locally on my Windows 11 PC. Today's post will be about documenting the steps that I had to take that weren't referenced in the [excellent video from TechnoTim](https://www.youtube.com/watch?v=F8iOU1ci19Q). 

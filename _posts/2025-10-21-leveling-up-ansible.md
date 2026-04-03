@@ -4,7 +4,7 @@ date: 2025-10-21 20:21:00 +0100
 categories: [ansible]
 tags: [ansible,sysadmin,devops]
 author: richardnye
-description: Adding Ansible handlers, group variables, Postgresql improvements, and accounting for dev and prod environments.
+description: Improving Ansible playbooks with handlers, group variables, and separate dev and prod environments — making homelab automation more reliable and maintainable.
 ---
 
 ## Leveling Up Ansible

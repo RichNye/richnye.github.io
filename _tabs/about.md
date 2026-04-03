@@ -1,5 +1,7 @@
 ---
 # the default layout is 'page'
+title: About
+description: Richard Nye — a DevOps engineer with 9 years in IT documenting the journey from sysadmin to cloud infrastructure, covering Terraform, Kubernetes, Ansible, and more.
 icon: fas fa-info-circle
 order: 4
 ---

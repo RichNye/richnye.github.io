@@ -4,7 +4,7 @@ date: 2025-10-23 16:31:00 +0100
 categories: [devops,ci/cd]
 tags: [github,ansible,sysadmin,devops,azure]
 author: richardnye
-description: Introducing my current continuous deployment setup that combines an ASP.NET Core project, with GitHub Actions and Ansible in a self-hosted runner.
+description: Building a CD pipeline for an ASP.NET Core API with GitHub Actions and Ansible on a self-hosted runner, from Azure hosting to on-premise deployment.
 ---
 
 Hi all. Today I wanted to explain my first foray into automatic code deployment and how I got to this point. Today we'll cover the first ever hosting setup of my MealPlanner API in Azure, how that introduced me to GitHub Actions, and how I pivoted to an on-prem setup that utilises Ansible. It helps if you've read previous blog posts, [particularly this introduction to my Ansible setup](/posts/introduction-to-ansible), but is by no means mandatory.

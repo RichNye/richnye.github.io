@@ -4,7 +4,7 @@ date: 2025-10-07 20:48:00 +0100
 categories: [blog,github,sysadmin,devops]
 tags: [blog,jekyll,github,sysadmin,devops]
 author: richardnye
-description: Why bother with a blog?!
+description: A DevOps-focused blog documenting homelab projects, automation tooling, and architecture decisions from a sysadmin making the transition to DevOps.
 ---
 
 ## Introduction

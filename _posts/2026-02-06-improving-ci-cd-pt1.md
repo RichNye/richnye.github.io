@@ -4,7 +4,7 @@ date: 2026-02-06 11:48:00 +0000
 categories: [cicd]
 tags: [github,githubactions,cicd,ansible]
 author: richardnye
-description: Improving my CI/CD pipeline
+description: Decoupling CI from CD, versioning releases with GitHub Actions run numbers, and fixing Ansible idempotency — four improvements to a homelab pipeline.
 ---
 
 ## Introduction

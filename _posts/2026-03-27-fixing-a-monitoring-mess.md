@@ -4,7 +4,7 @@ date: 2026-03-27 17:48:00 +0000
 categories: [monitoring]
 tags: [azure,monitoring,sre,devops]
 author: richardnye
-description: How I tackled alert fatigue with four practical changes to monitoring in Azure
+description: Four changes that cut Azure alert noise: refined KQL queries, actionable thresholds, replacing email notifications, and ensuring every alert demands a response.
 ---
 
 # The Problem and Setting the Scene

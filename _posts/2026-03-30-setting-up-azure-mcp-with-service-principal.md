@@ -4,7 +4,7 @@ date: 2026-03-30 11:48:00 +0000
 categories: [azure]
 tags: [azure,mcp,ai,devops]
 author: richardnye
-description: Setting up a local Azure MCP server with Claude Desktop
+description: How to configure Azure MCP Server with Claude Desktop using a service principal for least-privilege access, including app registration and RBAC.
 ---
 # Introduction
 Today I'm going to focus on how to set up Azure MCP Server, but more specifically how to use a service principal to authenticate. During my setup, and I've done this with both MacOS using npm and Windows using Docker, I really struggled to find a simple guide about how to use Azure MCP with a service principal so thought I'd document my own setup to hopefully help the community.

@@ -1,10 +1,10 @@
 ---
 title: Lessons from Early Terraform Mistakes
 date: 2025-12-16 14:00:00 +0000
-categories: [Terraform]
+categories: [terraform]
 tags: [terraform,devops,proxmox]
 author: richardnye
-description: Fixing my beginner Terraform mistakes when securing secrets, segregating environments, and creating child modules.
+description: Three beginner Terraform mistakes fixed: hardcoded cloud-init credentials, inflexible child modules, and mixed environments — with solutions for each.
 ---
 
 ## Introduction

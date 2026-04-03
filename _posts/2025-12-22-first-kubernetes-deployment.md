@@ -1,10 +1,10 @@
 ---
 title: First Kubernetes Deployment of an ASP.NET Core App
 date: 2025-12-22 14:00:00 +0000
-categories: [Kubernetes]
+categories: [kubernetes]
 tags: [kubernetes,devops,docker]
 author: richardnye
-description: Deploying an ASP.NET Core application to Kubernetes as a beginner
+description: A first Kubernetes deployment of an ASP.NET Core app on k3s: manifests, Ingress, Secrets, ConfigMaps, and the mistakes made along the way.
 ---
 
 ## Introduction
