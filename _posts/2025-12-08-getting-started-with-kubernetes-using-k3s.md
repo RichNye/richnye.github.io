@@ -8,7 +8,7 @@ description: Kubernetes fundamentals using k3s: core concepts explained, how to 
 ---
 
 ## Introduction 
-[My last post](/posts/containerising-aspnet-core-applications) was all about venturing into Docker containers using GitHub Actions as a CI tool. I've worked with containers before so I didn't want to spend too long at this particularly stop on the devops road. 
+[My last post](/posts/containerising-aspnet-core-applications/) was all about venturing into Docker containers using GitHub Actions as a CI tool. I've worked with containers before so I didn't want to spend too long at this particularly stop on the devops road. 
 
 The point of this journey is to increase my knowledge of devops practices and tech - and my core gaps are currently AWS and Kubernetes. While I could easily spin up an EKS instance with very little knowledge, I figured it would be best to learn the core tech behind Kubernetes first. 
 

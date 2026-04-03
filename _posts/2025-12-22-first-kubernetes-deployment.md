@@ -8,12 +8,12 @@ description: A first Kubernetes deployment of an ASP.NET Core app on k3s: manife
 ---
 
 ## Introduction
-This week is all about Kubernetes and deploying an actual application/platform. In my [previous post](/posts/getting-started-with-kubernetes-using-k3s), I'd spoken about spinning up a cluster using k3s and now it's all about actually hosting something meaningful in that cluster. Today we'll cover the process, mistakes I made, and where I envisage going next. 
+This week is all about Kubernetes and deploying an actual application/platform. In my [previous post](/posts/getting-started-with-kubernetes-using-k3s/), I'd spoken about spinning up a cluster using k3s and now it's all about actually hosting something meaningful in that cluster. Today we'll cover the process, mistakes I made, and where I envisage going next. 
 
 First, though, let me give some context into the app I'll be running inside Kubernetes.
 
 ## Background - what app am I running?
-I've covered this in numerous posts before, namely [containerising ASP.NET Core applications](/posts/containerising-aspnet-core-applications), so I'll keep this brief. My app consists of the following architecture currently:
+I've covered this in numerous posts before, namely [containerising ASP.NET Core applications](/posts/containerising-aspnet-core-applications/), so I'll keep this brief. My app consists of the following architecture currently:
 
 1) **HAProxy load balancer** - this terminates TLS, routes depending on URL, does health checks on backend server instances, all the typical load balancer goodness.<br> 
 2) **Frontend** - this is literally a one page static site, served by nginx.<br> 
