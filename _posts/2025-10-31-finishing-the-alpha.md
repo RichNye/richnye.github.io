@@ -4,7 +4,7 @@ date: 2025-10-31 21:28:00 +0000
 categories: [homelab]
 tags: [homelab,devops,website,dotnet,nginx]
 author: richardnye
-description: Completing the homelab web stack: adding HAProxy as a load balancer, an nginx frontend, and Cloudflare routing to serve the MealPlanner app end-to-end.
+description: "Completing the homelab web stack: adding HAProxy as a load balancer, an nginx frontend, and Cloudflare routing to serve the MealPlanner app end-to-end."
 ---
 
 ## Finishing the website alpha

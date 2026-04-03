@@ -4,7 +4,7 @@ date: 2025-12-22 14:00:00 +0000
 categories: [kubernetes]
 tags: [kubernetes,devops,docker]
 author: richardnye
-description: A first Kubernetes deployment of an ASP.NET Core app on k3s: manifests, Ingress, Secrets, ConfigMaps, and the mistakes made along the way.
+description: "A first Kubernetes deployment of an ASP.NET Core app on k3s: manifests, Ingress, Secrets, ConfigMaps, and the mistakes made along the way."
 ---
 
 ## Introduction

@@ -4,7 +4,7 @@ date: 2025-12-16 14:00:00 +0000
 categories: [terraform]
 tags: [terraform,devops,proxmox]
 author: richardnye
-description: Three beginner Terraform mistakes fixed: hardcoded cloud-init credentials, inflexible child modules, and mixed environments — with solutions for each.
+description: "Three beginner Terraform mistakes fixed: hardcoded cloud-init credentials, inflexible child modules, and mixed environments — with solutions for each."
 ---
 
 ## Introduction

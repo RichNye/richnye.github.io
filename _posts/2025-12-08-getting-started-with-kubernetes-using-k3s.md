@@ -4,7 +4,7 @@ date: 2025-12-08 11:00:00 +0000
 categories: [kubernetes]
 tags: [kubernetes,containers,devops,k3s]
 author: richardnye
-description: Kubernetes fundamentals using k3s: core concepts explained, how to choose between cluster tools, and setting up a control plane with two worker nodes.
+description: "Kubernetes fundamentals using k3s: core concepts explained, how to choose between cluster tools, and setting up a control plane with two worker nodes."
 ---
 
 ## Introduction 

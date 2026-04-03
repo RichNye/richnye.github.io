@@ -4,7 +4,7 @@ date: 2025-10-15 12:48:00 +0100
 categories: [terraform]
 tags: [terraform,sysadmin,devops]
 author: richardnye
-description: Overview of Terraform IaC for a Proxmox homelab: module structure, VM provisioning, and early security problems including hardcoded SSH keys.
+description: "Overview of Terraform IaC for a Proxmox homelab: module structure, VM provisioning, and early security problems including hardcoded SSH keys."
 ---
 
 ## Current Terraform Setup

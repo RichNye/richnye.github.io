@@ -4,7 +4,7 @@ date: 2026-01-01 11:48:00 +0000
 categories: [aws,terraform]
 tags: [aws,terraform,devops]
 author: richardnye
-description: Comparing Terraform strategies for managing multiple environments: branches, separate repos, directories, and remote state with separate S3 backend keys.
+description: "Comparing Terraform strategies for managing multiple environments: branches, separate repos, directories, and remote state with separate S3 backend keys."
 ---
 
 ## Introduction

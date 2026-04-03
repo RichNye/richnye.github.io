@@ -4,7 +4,7 @@ date: 2025-11-14 13:57:00 +0000
 categories: [docker]
 tags: [docker,aspnetcore,containers,devops,github]
 author: richardnye
-description: Containerising an ASP.NET Core API with Docker and GitHub Actions: building and pushing images to Docker Hub as part of a homelab CD pipeline.
+description: "Containerising an ASP.NET Core API with Docker and GitHub Actions: building and pushing images to Docker Hub as part of a homelab CD pipeline."
 ---
 
 ## Introduction
