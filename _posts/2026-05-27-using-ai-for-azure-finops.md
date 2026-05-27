@@ -1,6 +1,6 @@
 ---
 title: Using AI as an Azure FinOps agent to reduce Azure spend
-date: 2026-05-27 21:28:00 +0000
+date: 2026-05-27 20:28:00 +0000
 categories: [azure]
 tags: [azure,mcp,ai,devops]
 author: richardnye
