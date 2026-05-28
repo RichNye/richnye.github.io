@@ -6,13 +6,15 @@ tags: [azure,mcp,ai,devops]
 author: richardnye
 description: How to configure Azure MCP Server with Claude Desktop using a service principal for least-privilege access, including app registration and RBAC.
 ---
-# Introduction
+
 Today I'm going to focus on how to set up Azure MCP Server, but more specifically how to use a service principal to authenticate. During my setup, and I've done this with both MacOS using npm and Windows using Docker, I really struggled to find a simple guide about how to use Azure MCP with a service principal so thought I'd document my own setup to hopefully help the community.
 
-# Why Azure MCP?
+I've also created [a follow-on post detailing a real-world usage of AI to streamline an Azure environment](/posts/using-ai-for-azure-finops/) that you can read for inspiration.
+
+# Why use Azure MCP?
 I don't know about you, but our Azure estate is vast. In fact it doesn't take long for an Azure estate to become difficult to analyse, in my opinion. Yes there's Azure Advisor, but that takes time and sometimes feels like a bit of an upsell - yes I'm aware my VMs are running as B-series SKUs, I did that for a reason! We're seeing all these articles and buzz about speeding up app development using MCP, and for good reason, but what about Infrastructure? 
 
-## Potential Usage
+## Potential uses for Azure MCP
 The world really is your oyster here. Personally I've used Azure MCP to highlight inefficiencies within our environment and I'm excited by the potential. For example, I wanted it to act as an Azure architect and FinOps expert to highlight cost-saving, and it did just that. It found a VM that looked fine on the surface but was failing to deallocate, numerous potential orphaned Veeam backup resources, and inefficient use of public IPs on VMs that were behind an Azure firewall. All basic stuff, but really useful when you have a team full of varying Azure experience and skill levels. 
 
 It wasn't perfect, though, and there's the usual disclaimer when it comes to AI - it's a tool that should never drive you. Every recommendation it's outputted (in a lovely dedicated markdown doc, no less) will be manually checked and confirmed before I go deleting resources. But the speed at which it analysed, and the thorough report it produced, has left me excited to see what's next. One glimpse at the Azure MCP Server docs and the tools it offers should be enough to get the creative juices flowing for anyone reading this!
@@ -21,8 +23,7 @@ Where I personally want to go next is getting it to analyse log analytics, triag
 
 But it can go beyond that. We have two Azure subscriptions that are currently not infrastructure-as-code, and it was going to be a daunting task creating Terraform that not only encompasses all resources that already exist, but also follows our other subscriptions in IaC style. What if I combine access to the IaC repository with Azure MCP? Suddenly this task potentially becomes *weeks* quicker. I'm yet to test that but I'm excited to. 
 
-
-# Prerequisites
+# Prerequisites before configuring Azure MCP with service principal
 First, a brief overview of a variety of things. Now I won't be covering what MCP is here, I feel like there's already a plentiful supply of learning resources online, but I will be covering the why and how.
 
 ## Why a service principal?
@@ -33,7 +34,7 @@ Now I've noticed that Microsoft documentation [like this](https://github.com/mic
 
 So I created a new app registration in Entra, created a client token/secret, and provided that app registration with the permission I wanted. I felt an entirely new identity was best here because I could guarantee it wouldn't have existing permission elsewhere. I wanted a good guardrail in place because this is unknown territory - yes the AI model usually asks for permission before acting, but a single misclick or lapse in concentration could give it permission to modify resources; a huge no for what I was attempting here. The service principal provides another guardrail at a higher level.
 
-## Choosing how to run MCP Server
+## Choosing how to run the MCP Server
 The documentation gives a variety of options, mostly centred around using some form of package manager: NuGet, NPM, PyPI, are the three [listed here](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/get-started). But I've been playing around learning MCP by taking advantage of the Docker Desktop MCP Catalog of MCP Servers, and I really wanted consistency in how I'm running MCP with Claude Desktop. [Microsoft also handily document exactly that scenario here.](https://github.com/microsoft/mcp/blob/main/servers/Azure.Mcp.Server/README.md#docker). 
 
 Note that I did also have good experiences with MacOS and NPM, so really it's up to you how you run this. What I will say is that make sure you're familiar with the generic Azure SDK authentication because the environment variables available to you stem from that; they're not unique or created for Azure MCP.
