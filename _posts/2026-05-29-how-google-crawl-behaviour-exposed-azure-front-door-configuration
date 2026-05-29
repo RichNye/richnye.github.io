@@ -1,0 +1,98 @@
+---
+title: Google changed the way it crawls our site - and exposed several Azure Front Door misconfigurations
+date: 2026-05-29 12:11:00 +0000
+categories: [azure]
+tags: [azure, azurefrontdoor, googlebot, seo, kql, cdn, devops]
+author: richardnye
+description: How an undocumented Google crawl location change caused a drastic drop-off in crawl rate on an Azure Front Door site — and the three fixes that resolved it
+---
+
+Hi all, today's post details an interesting problem that faced a website thanks to undocumented Google crawl behaviour that hit us suddenly. The website used Azure Front Door for global CDN/WAF capability but only had one origin - hosted in Azure in the UK South region. This *should have* been fine given it's a UK-centric site that receives very little global traffic - that is until Google starts crawling you from the West Coast of the US suddenly. Let's dive in.
+
+## The problem: what Google Search Console was telling us
+All was well with the site from the UK, cache hit ratios were in the 80%+ range, response times were generally rapid even if cache was missed. Google typically crawled the site thousands of times a day. Then suddenly a ticket came in detailing a drastic drop-off in mid-April. Average response times were never great according to Google (700ms) but they'd suddenly jumped to almost double that number (1.3s) with seemingly no explanation. There was absolutely no denying the correlation between crawl requests and average response time, and indeed this is documented behaviour - if response times increase, Google backs off. They claim it's to prevent overloading the site, and I believe that, but I also feel it's likely to ensure they're not wasting their crawl compute resources on long-loading pages. Either way, Google Search Console offered zero explanation as to why.
+
+So the team did what most dev/devops teams do - review latest changes, any Azure Front Door configuration changes in particular, as well as wider site changes. And nothing correlated. AFD hadn't been changed for two weeks, it was that stable, and other changes weren't remotely related. Besides, genuine traffic in the UK wasn't seeing the impact. Response times were still good in the P50/P90/P99 metrics.
+
+## Tracing the cause with Azure Front Door logs and AI
+As I've touched on [in my last post](/posts/using-ai-for-azure-finops/), AI can be fantastic at quick data analysis. That's not to say a human couldn't do it, but I'm telling you from experience that AI found this random behaviour change a lot quicker than humans would have. I'd also recommend reading my [post about using service principals and the Azure reader role for guard-railed AI access](/posts/setting-up-azure-mcp-with-service-principal/) to ensure you're doing AI analysis in a safe and controlled way. 
+
+I ensured the prompt contained the subscription ID, the AFD name and resource ID, and told it the general problem; on x date at y time, we saw a dramatic decrease in Google crawl rate and response times shot up. I instructed it to solely use the data and try to identify a pattern and I was intentionally vague about certain details. Initially it had failed to identify the cause because I'd mentioned a change, even though that change had occurred a week later than this issue started. It got fixated on that and wasn't objective in its analysis. I'd go with a prompt like:
+
+```
+You're an Azure site reliability engineer with extensive Google SEO experience and specialism in monitoring eCommerce sites. We've noticed a drastic drop-off in Google crawl requests and response times have increased. Please analyse the Azure Front Door logs between 15:00 and 19:00 on #th April 2026. For any hypotheses you have, please analyse data from a baseline of the day before (where everything was normal) before outputting them to me. Do not hypothesise about the cause using sources other than Azure Front Door logs. Clarify any uncertainties with me before arriving at your conclusion. Also output the KQL used in your analysis. The Azure Front Door resource name is xyz, resource id is 124-4534346-4577567sdfsdfg and subscription id is 1234567-858-hfhfhfhd.  
+```
+
+This prompt addressed the following problems:
+1) Claude tried to solve the problem by utilising other sources or its own knowledge of Google SEO. That was too vague here, we'd tried that already. I wanted it to focus solely on the data.
+2) Claude had no knowledge of our environment and the first attempt had it finding problems, yes, but problems that were normal for us and unrelated. As soon as I specifically told it to compare to baseline data, it became fantastic. I could see the inner monologue finding issues, checking the baseline data, and realising it wasn't the cause. 
+3) Keywords including Azure, Google SEO, and Azure Front Door made sure it tapped into the right areas of its knowledge.
+4) Having the KQL provided allowed for manual confirmation.
+
+I'd also recommend outputting its analysis as HTML - it made sharing with the team far easier. But only when you're happy the findings are worth sharing - save those tokens!
+
+## Useful KQL
+These might not be perfect (I've seen Google note that useragents are often spoofed and to lookup the requester IP) but they did a job for me. 
+
+### Chart Googlebot requests (based on useragent)
+```
+// Googlebot requests for last 60 days, in 12h increments. Adjust those times as necessary.
+ AzureDiagnostics
+ | where Category == "FrontDoorAccessLog"
+ | where userAgent_s contains "googlebot"
+ | where TimeGenerated >= ago(60d)
+ | summarize Requests=count() by bin(TimeGenerated, 12h)
+ | render timechart
+```
+
+### Chart Googlebot requests by AFD PoP
+```
+// Googlebot requests by pop - adjust times as necessary.
+ AzureDiagnostics
+ | where Category == "FrontDoorAccessLog"
+ | where userAgent_s contains "googlebot"
+ | where TimeGenerated >= ago(7d)
+ | summarize Requests=count() by bin(TimeGenerated, 4h), pop_s
+ | render timechart
+```
+
+## The cause - Google changed where it crawls from and hit different Azure Front Door PoPs
+AI immediately noticed the difference in the pop_s column - Google changed its crawl location from Atlanta to the West Coast (BY/LAX/SJC AFD PoP abbreviations, if interested). While Google crawls our site from all over the globe, what's apparent from AFD is that a couple of PoPs dominate serving Googlebot requests. And rendering the KQL as a timechart made it obvious - Google transitioned to West US over a four hour period and response times jumped as a result. Our site has a UK South origin - that extra geographic distance was enough for crawling to suffer sufficiently that Google backed off. 
+
+It was also apparent that Google was missing cache frequently, in fact 70% of requests were missing cache, and without enough natural US traffic (it's a UK-based site!) there was nothing to warm the resources it crawled naturally. Essentially, unless Google crawled a page twice in quick succession (which it does seem to), it would suffer a 1.3s+ response time.
+
+And to be fair to Google they're quite upfront about that - they can crawl you from wherever they feel like, although do seem to prioritise response time (we'll touch on this later). If anything, having a global CDN arguably shot us in the foot here - if we only gave good responses from the UK/Europe, Google likely would've focused solely on those locations. But because response times were occasionally great if cache was hit, and was within the acceptable <1s limit from Atlanta, Google's crawling made a decision to swap us to the West Coast.
+
+## The Three Fixes
+I'll keep this short.
+
+1) Sort your cache lifetimes out. 
+
+We were caching HTML pages for only 10 minutes. I'm still not sure why. We also don't incrementally invalidate the cache based on which pages are changed in a build. Increase your cache lifetimes based on how stable the content is - our content is generally stable but without incremental and selective purge, we've gone with a cache lifetime that's the same as the time between site builds.
+
+2) Check how query parameters are handled by the cache
+
+We had to tweak our list of query parameters that could hit the cache instead of bypassing it. This will depend on your request source tracking, for example.
+
+3) Deploy an origin to Central US
+
+This is the big one and deserves its own section.
+
+## The Main Fix: deploying another Azure Front Door origin in Central US
+It's a UK-based site, as I've mentioned many times. Why should we deploy infrastructure specifically to serve US requests? Because Google demands it, that's why. I won't detail what that change was for privacy reasons, but it's standard AFD stuff. It leverages AFD's latency-based routing.
+
+What is interesting is how Google responded. Within a couple of hours of deploying infrastructure to Azure Central US, the PoPs that Googlebot primarily hit to crawl us changed from West Coast to Iowa and Minnesota. Almost immediately. And response times rapidly improved, obviously, to 300-500ms even with cache misses. 
+
+What I will say is that while Google is quick to drop crawl rate, it seems hesitant to trust again. We're seeing rate increase slower than we'd like, albeit on the up again. Something to be aware of if you run into something similar.
+
+## What Microsoft don't tell you about Azure Front Door CDN caching
+I found Microsoft's documentation about AFD caching architecture to be seriously lacking. From what I could tell, AFD Classic SKU used to have the concept of 'Origin Shield' - a tiered cache strategy that you could control. If the edge PoP's cache didn't contain the resource, you could manually specify the next cache to try. This would've resolved everything for us if we were able to set the origin shield to UK South. We have enough natural UK traffic that means our UK cache is generally always warm (80-90% hit percentage) so traffic never would've hit our origin, even if a UK round-trip still occurred. So how does the AFD Premium SKU tiered caching actually work? I couldn't fully tell you because Microsoft don't appear to document it. I can see 'REMOTE_HIT' in the AFD logs, so there's clearly some two-tiered caching architecture going on somewhere, but from what I can see AFD generally caches per PoP and then there's a select few tiered caches globally. But the docs on this are sparse, the best I could find was a random Microsoft support/Q&A/Learn thread. That means it's incredibly difficult to warm a cache yourself via a script that loads all resources every x minutes (believe me, I tried). It did work, but the issue is you're relying on Google hitting those same PoPs, and there's no guarantee they will. 
+
+I also found a PoP in the AFD logs that Microsoft literally do not have documented in their PoP lists, either by location so that I could try and guess what 'BY' meant, or their actual abbreviation list. I can only assume they've added a PoP recently and not updated the docs. Infuriating when trying to confirm where Googlebot requests are coming from!
+
+## Summary
+If I had to give one main takeaway from this debacle it's that Google can, and will, choose to crawl you from wherever it feels like and reserves the right to suddenly change where it crawls you from. This will highlight how good your global response times are (albeit with a heavy US-centric bias) as well as your caching strategy and hit ratios. Our monitoring should've caught this sooner, but that's always an ongoing battle.
+
+So even if you're a site serving primarily one country, if you're heavily reliant on SEO and Google generally then you're not as local as you think.
+
+
