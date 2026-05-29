@@ -1,6 +1,6 @@
 ---
 title: Google changed the way it crawls our site - and exposed several Azure Front Door misconfigurations
-date: 2026-05-29 12:11:00 +0000
+date: 2026-05-29 14:11:00 +0000
 categories: [azure]
 tags: [azure, azurefrontdoor, googlebot, seo, kql, cdn, devops]
 author: richardnye
